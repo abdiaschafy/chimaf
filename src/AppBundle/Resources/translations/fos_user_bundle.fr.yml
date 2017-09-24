@@ -1,1 +1,5 @@
 connexion.form.title.connexion: "Login"
+security.login.submit: Connexion
+connexion.form.url_label.oubli_mot_de_passe: Mot de passe oublié
+connexion.form.field_label.mot_de_passe: Mot de passe
+connexion.form.field_label.nom_utilisateur: Adresse mail

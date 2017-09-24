@@ -1,4 +1,7 @@
 connexion.form.title.connexion: "Login"
+connexion.form.url_label.oubli_mot_de_passe: Forgotten password ?
+connexion.form.field_label.mot_de_passe: Password
+connexion.form.field_label.nom_utilisateur: Email
 group:
     edit:
         submit: 'Update group'

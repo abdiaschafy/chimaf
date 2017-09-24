@@ -15,14 +15,15 @@ class LoginFormType extends AbstractType
         $builder
             ->add('_username',  TextType::class, array(
                 'label'         =>  'connexion.form.field_label.nom_utilisateur',
-                'label_attr'    =>  array('class'   =>  'text-default'),
-                'attr'          =>  array('class'   =>  'form-control',
+                'label_attr'    =>  array('class'   =>  'text-color-white'),
+                'attr'          =>  array(
+                    'class'   =>  'form-control',
                     'autofocus'     =>  'autofocus'
                 )
             ))
             ->add('_password', PasswordType::class, array(
                 'label'         =>  'connexion.form.field_label.mot_de_passe',
-                'label_attr'    =>  array('class'   =>  'text-default'),
+                'label_attr'    =>  array('class'   =>  'text-color-white'),
                 'attr'          =>  array('class'   =>  'form-control')
             ))
         ;
@@ -32,7 +33,7 @@ class LoginFormType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => 'AppBundle\Entity\User',
-            'translation_domain' => 'connexion_form'
+            'translation_domain' => 'fos_user_bundle'
         ));
     }
 

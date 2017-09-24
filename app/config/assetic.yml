@@ -25,10 +25,16 @@ assetic:
         bootstrap_css:
             inputs:
                 - "%kernel.root_dir%/../vendor/twbs/bootstrap/less/bootstrap.less"
-            filters:
-                - lessphp
-                - cssrewrite
+            filters: [cssrewrite, ?yui_js]
             output: css/bootstrap.css
+
+        app_css:
+            inputs:
+                - "@AppBundle/Resources/public/css/custom.css"
+                - "@AppBundle/Resources/public/css/form-elements.css"
+                - "@AppBundle/Resources/public/css/style.css"
+            filters: [cssrewrite, ?yui_js]
+            output: css/app.css
 
         bootstrap_js:
             inputs:
@@ -62,3 +68,9 @@ assetic:
             inputs:
                 - "%kernel.root_dir%/../vendor/twbs/bootstrap/fonts/glyphicons-halflings-regular.woff"
             output: "fonts/glyphicons-halflings-regular.woff"
+
+        fontawesome_css:
+            inputs:
+                - "%kernel.root_dir%/../vendor/bmatzner/fontawesome-bundle/Bmatzner/FontAwesomeBundle/Resources/public/less/font-awesome.less"
+            filters: [cssrewrite, ?yui_js]
+            output: css/fontawesome.css
