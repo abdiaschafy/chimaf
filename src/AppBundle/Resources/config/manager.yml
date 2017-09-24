@@ -1,0 +1,12 @@
+services:
+    # -- chain for access to all managers
+#    app.manager.chain:
+#        class: Cil\AppBundle\Manager\Base\ManagerChain
+#
+#    # -- base manager
+#    app.base.manager:
+#        abstract: true
+#        class: Cil\AppBundle\Manager\Base\BaseManager
+#        arguments:
+#            - "@doctrine.orm.entity_manager"
+#            - "@app.flash_message"

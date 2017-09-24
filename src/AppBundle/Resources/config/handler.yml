@@ -1,0 +1,12 @@
+services:
+#    app.handler_factory:
+#        class: '%app.handler_factory.class%'
+#        arguments:
+#            - '@request_stack'
+#            - '@app.manager.chain'
+#            - '@form.factory'
+#
+#    annonce.handler.form:
+#        class: Cil\AppBundle\Form\Handler\Program\AnnonceHandler
+#        scope: request
+#        arguments: ["@request_stack", "@app.annonce.manager", "@app.flash_message"]

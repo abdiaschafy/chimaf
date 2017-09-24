@@ -1,0 +1,20 @@
+{% trans_default_domain 'gestion_utilisateur_page' %}
+{% extends "@App/Page/Base/base.html.twig" %}
+
+{% block title %}
+    {{ parent() ~ " " ~ 'gestion_utilisateur.page.title.liste' | trans }}
+{% endblock title %}
+
+{% block page_content %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>{{ 'gestion_utilisateur.page.title.liste' | trans }}</h2>
+            <hr>
+        </div>
+        <div class="col-md-12">
+            {{ datatable_render(datatable) }}
+        </div>
+    </div>
+
+{% endblock  %}

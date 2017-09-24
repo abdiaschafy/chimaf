@@ -1,0 +1,18 @@
+{% trans_default_domain 'gestion_utilisateur_page' %}
+{% extends '@App/Page/Base/crud.html.twig' %}
+
+{% set form_title = 'gestion_utilisateur.page.title.modification' | trans %}
+
+{% block title %}
+    {{ parent() ~ " " ~ 'gestion_utilisateur.page.title.modifier' | trans }}
+{% endblock title %}
+
+{% block current_form %}
+
+    {% include 'UserBundle::Templates/register-form.html.twig' with {'form':edit_form, 'action':form_action, 'user':user} %}
+
+    {% set deleteUrl = path('cil_user_delete', { 'id': user.id }) %}
+
+    {% include 'AppBundle::Templates/confirm-modal.html.twig' with {'url': deleteUrl, 'message':'gestion_utilisateur.page.message.confirmation_suppression' | trans({'%property%':user.firstname~' '~user.lastname}, 'gestion_utilisateur_page') }%}
+
+{% endblock %}

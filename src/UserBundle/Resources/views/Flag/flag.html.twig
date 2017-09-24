@@ -1,0 +1,22 @@
+{##
+ # This file is part of the SgDatatablesBundle package.
+ #
+ # (c) stwe <https://github.com/stwe/DatatablesBundle>
+ #
+ # For the full copyright and license information, please view the LICENSE
+ # file that was distributed with this source code.
+ #}
+{% extends 'UserBundle:Flag:flag.html.twig' %}
+
+{% block data %}
+    "data": "{{ column.data }}",
+    {% if column.editable %}
+        "render": function(data, type, row, meta) {
+        return render_editable_flag(data, type, row, meta, '{{ column.data }}', '{{ column.frLabel }}', '{{ column.enLabel }}', '{{ column.index }}');
+        },
+    {% else %}
+        "render": function(data, type, row, meta) {
+        return {{ column.render }}(data, type, row, meta, "{{ column.frIcon }}", "{{ column.enIcon }}", "{{ column.enLabel }}", "{{ column.frLabel }}");
+        },
+    {% endif %}
+{% endblock %}

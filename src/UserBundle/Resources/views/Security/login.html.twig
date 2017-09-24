@@ -1,0 +1,14 @@
+{% extends '@App/Base/base.html.twig' %}
+
+
+{% block title %}
+    {{ parent() ~ ' ' ~ 'connexion.form.title.connexion' | trans({}, 'fos_user_bundle') }}
+{% endblock %}
+
+{% block page_content %}
+
+    {% block cilLoginForm %}
+        {% include 'UserBundle::Templates/login-form.html.twig' %}
+    {% endblock %}
+
+{% endblock %}

@@ -1,0 +1,121 @@
+{% extends "@App/Page/Base/base.html.twig" %}
+
+{% block title %}
+    {{ parent()~" "~'infos_personnelles.page.title.compte' | trans({}, 'infos_personnelles_page') }}
+{% endblock %}
+
+{% block page_content %}
+
+    <div class="row">
+        <br>
+        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4 user-account">
+
+            <h2 class="text-center my-account">
+                {{ 'infos_personnelles.page.title.infos_personnelles'| trans({}, 'infos_personnelles_page') }}
+            </h2>
+            <hr>
+
+            <a href="javascript:void(0)" class="twPc-avatarLink">
+                <span class="glyphicon glyphicon-user"></span>
+            </a>
+
+            <div class="twPc-divUser">
+                <div class="twPc-divName">
+                    <a href="javascript:void(0)">{{ user.firstname~' '~user.lastname }}</a>
+                </div>
+                <span>
+                <a href="javascript:void(0)"><span>{{ user.email }}</span></a>
+            </span>
+            </div>
+            <hr>
+
+            <div class="twPc-divStats">
+                <form role="form"  action="{{ path(form_action) }}" {{ form_enctype(form) }} class="fos_user_registration_register cil-form" method="POST">
+
+                    <div class="form-group">
+                        {{ form_label(form.first_name) }}
+                        {{ form_widget(form.first_name) }}
+                        {{ form_errors(form.first_name) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.last_name) }}
+                        {{ form_widget(form.last_name) }}
+                        {{ form_errors(form.last_name) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.email) }}
+                        {{ form_widget(form.email) }}
+                        {{ form_errors(form.email) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.phone) }}
+                        {{ form_widget(form.phone) }}
+                        {{ form_errors(form.phone) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.fax) }}
+                        {{ form_widget(form.fax) }}
+                        {{ form_errors(form.fax) }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form_label(form.language) }}
+                        {{ form_widget(form.language) }}
+                        {{ form_errors(form.language) }}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.password.first) }}
+                                {{ form_widget(form.password.first) }}
+                                {{ form_errors(form.password.first) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                {{ form_label(form.password.second) }}
+                                {{ form_widget(form.password.second) }}
+                                {{ form_errors(form.password.second) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if user.lastlogin %}
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                <div class="form-group">
+                                    <span style="color: #8c8c8c;">{{ 'infos_personnelles.page.text.derniere_connexion' | trans({}, 'infos_personnelles_page') }}</span>
+                                    <strong>{{ user.lastlogin | localizeddate('medium', 'short', app.request.locale ) }}</strong>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <div class="row">
+                        {{ include('AppBundle:Page/Base/Button:buttons.html.twig',
+                        {'buttons' : [
+                            {
+                                msg: 'ux.button_label.mettre_a_jour',
+                                type: 'success',
+                                tooltip: 'ux.tooltip_text.utilisateur-mettre_a_jour',
+                            }
+                            ]}
+                        ) }}
+                    </div>
+
+                    {{ form_rest(form) }}
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

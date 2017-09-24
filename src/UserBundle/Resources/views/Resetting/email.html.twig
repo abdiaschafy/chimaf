@@ -1,0 +1,11 @@
+{% block subject %}
+    {{ 'cil.resetting.email.subject'|trans({'%username%': user.completeusername, '%confirmationUrl%': confirmationUrl}, 'fos_user_bundle', user.language)|html_filtered }}
+{% endblock %}
+
+{% block body_text %}{% endblock %}
+
+{% block body_html %}
+    {% set username = "<strong>"~user.completeusername~"</strong>" %}
+    {% set line = "<br>" %}
+    {{ 'cil.resetting.email.message'|trans({'%username%': username, '%lineBreak%':line, '%confirmationUrl%': confirmationUrl}, 'fos_user_bundle', user.language)|html_filtered }}
+{% endblock %}

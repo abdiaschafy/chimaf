@@ -1,0 +1,10 @@
+<div class="row">
+    <h1>CRéation de compte</h1>
+    <form action="{{ path('fos_user_registration_register') }}" method="POST" class="fos_user_registration_register">
+        {{ form_widget(form) }}
+        <div>
+            <input type="submit" value="{{ 'registration.submit'|trans({}, 'fos_user_bundle') }}" />
+        </div>
+    </form>
+</div>
+

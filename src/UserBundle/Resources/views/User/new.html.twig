@@ -1,0 +1,14 @@
+{% trans_default_domain 'gestion_utilisateur_page' %}
+{% extends '@App/Page/Base/crud.html.twig' %}
+
+{% set form_title = 'gestion_utilisateur.page.title.creation' | trans %}
+
+{% block title %}
+    {{ parent() ~ " " ~ 'gestion_utilisateur.page.title.creer' | trans }}
+{% endblock title %}
+
+{% block current_form %}
+
+    {% include 'UserBundle::Templates/register-form.html.twig' with {'form':form, 'action':form_action, 'user':user} %}
+
+{% endblock %}

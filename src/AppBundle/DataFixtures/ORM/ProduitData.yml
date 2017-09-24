@@ -1,0 +1,3 @@
+AppBundle\Entity\Produit:
+    produit{1..2}:
+        designation: <word()>

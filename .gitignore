@@ -1,0 +1,33 @@
+/app/config/parameters.yml
+/build/
+/phpunit.xml
+/var/*
+!/var/cache
+/var/cache/*
+!var/cache/.gitkeep
+!/var/logs
+/var/logs/*
+!var/logs/.gitkeep
+!/var/sessions
+/var/sessions/*
+!var/sessions/.gitkeep
+!var/SymfonyRequirements.php
+
+vendor/*
+
+# Assets and user uploads
+web/bundles/
+web/uploads/
+web/compiled/
+web/css/
+web/js/
+web/assetic/
+web/fonts/
+web/config.php
+web/images/
+build/
+
+# Composer
+composer.phar
+composer.lock
+.idea/**

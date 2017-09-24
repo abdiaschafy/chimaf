@@ -1,0 +1,32 @@
+<div class="row bg-form-cil margin-auto-15">
+
+    <div class="card card-container">
+
+        <h3 class="text-primary">{{ 'connexion.form.title.connexion' | trans({}, 'connexion_form') | upper }}</h3>
+        <hr>
+
+        <form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin cil-form" role="form">
+
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+            {{ form_label(loginForm._username) }}
+            {{ form_widget(loginForm._username, {'full_name': '_username','id': 'username', 'value' : last_username }) }}
+
+            {{ form_label(loginForm._password) }}
+            {{ form_widget(loginForm._password, {'full_name': '_password','id': 'password'}) }}
+
+            <div id="remember" class="checkbox">
+                <label>
+                    <input type="checkbox" value="remember-me" name="_remember_me"> {{ 'security.login.remember_me' | trans({}, 'FOSUserBundle') }}
+                </label>
+            </div>
+            <button type="submit" class="btn btn-lg cil-btn btn-primary btn-block btn-signin" name="_submit">{{ 'security.login.submit' | trans({}, 'FOSUserBundle') }}</button>
+
+        </form>
+
+        <a href="{{ path('fos_user_resetting_request') }}" class="forgot-password">
+            {{ 'connexion.form.url_label.oubli_mot_de_passe' | trans({}, 'connexion_form') }}
+        </a>
+
+    </div>
+
+</div>

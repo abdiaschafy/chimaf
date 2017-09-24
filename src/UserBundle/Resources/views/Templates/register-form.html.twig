@@ -1,0 +1,169 @@
+
+<div class="panel-body">
+
+    <form role="form"
+            {% if user.id %}
+                action="{{ path(action,{'id':user.id}) }}"
+            {% else %}
+                action="{{ path(action) }}"
+            {% endif %}
+            {{ form_enctype(form) }} class="fos_user_registration_register cil-form" method="POST" novalidate>
+        <fieldset class="form-group cil-shadow-box padding-10">
+            {#
+                DIV permettant de désactiver tous les champs du formulaire sauf le champ actif qd on
+                Coordonnateur et que nous éditions un utilisateur client
+            #}
+            <div
+                    {% if (app.user.getRoles[0] == constant('Cil\\AppBundle\\Entity\\Groupe::COORDO_CODE')) and isUserClientForm %}
+                        class="read-only-class"
+                    {% endif %}
+            >
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            {{ form_label(form.first_name) }}
+                            {{ form_widget(form.first_name) }}
+                            {{ form_errors(form.first_name) }}
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            {{ form_label(form.last_name) }}
+                            {{ form_widget(form.last_name) }}
+                            {{ form_errors(form.last_name) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            {{ form_label(form.email) }}
+                            {{ form_widget(form.email) }}
+                            {{ form_errors(form.email) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div
+                        {% if app.user.hasClient() or isUserClientForm %}
+                            class="col-xs-6 col-sm-6 col-md-6"
+                        {% else %}
+                            class="col-xs-6 col-sm-6 col-md-6" hidden
+                        {% endif %}
+                    >
+                        <div class="form-group">
+                            {{ form_label(form.client) }}
+                            {{ form_widget(form.client) }}
+                        </div>
+                    </div>
+                    <div
+                        {% if app.user.hasClient() %}
+                            class="col-xs-6 col-sm-6 col-md-6" hidden
+                        {% elseif (app.user.getRoles[0] == constant('Cil\\AppBundle\\Entity\\Groupe::COORDO_CODE')) or
+                                  (app.user.getRoles[0] == constant('Cil\\AppBundle\\Entity\\Groupe::ASSISTANT_CODE'))
+                        %}
+                            class="col-xs-6 col-sm-6 col-md-6 read-only-class"
+                        {% else %}
+                            class="col-xs-6 col-sm-6 col-md-6"
+                        {% endif %}
+                    >
+                        <div class="form-group">
+                            {{ form_label(form.groupe) }}
+                            {{ form_widget(form.groupe) }}
+                            {{ form_errors(form.groupe) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            {{ form_label(form.phone) }}
+                            {{ form_widget(form.phone) }}
+                            {{ form_errors(form.phone) }}
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            {{ form_label(form.fax) }}
+                            {{ form_widget(form.fax) }}
+                            {{ form_errors(form.fax) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            {{ form_label(form.language) }}
+                            {{ form_widget(form.language) }}
+                            {{ form_errors(form.language) }}
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <div class="form-group">
+                        {{ form_widget(form.enabled) }}
+                    </div>
+                </div>
+            </div>
+
+            {% if user.lastlogin %}
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <span style="color: #8c8c8c;">
+                                {{ 'infos_personnelles.page.text.derniere_connexion' | trans({}, 'infos_personnelles_page') }}
+                            </span>
+                            <strong>{{ user.lastlogin|localizeddate('medium', 'short', app.request.locale ) }}</strong>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <div class="row">
+                        {% if user.id and is_granted("ROLE_ADMIN") %}
+                            {{ include('AppBundle:Page/Base/Button:buttons.html.twig',
+                            {'buttons' : [
+                                {
+                                    msg: 'ux.button_label.supprimer',
+                                    id: 'btn_delete',
+                                    type: 'danger',
+                                    tooltip: 'ux.tooltip_text.utilisateur-supprimer'
+                                },
+                                {
+                                    msg: 'ux.button_label.enregistrer',
+                                    type: 'success',
+                                    tooltip: 'ux.tooltip_text.utilisateur-enregistrer'
+                                }
+                                ]}
+                            ) }}
+                        {% else %}
+                            {{ include('AppBundle:Page/Base/Button:buttons.html.twig',
+                            {'buttons' : [
+                                {
+                                    msg: 'ux.button_label.creer',
+                                    type: 'success',
+                                    tooltip: 'ux.tooltip_text.utilisateur-ajouter'
+                                }
+                            ]}
+                            ) }}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            {{ form_rest(form) }}
+        </fieldset>
+    </form>
+</div>

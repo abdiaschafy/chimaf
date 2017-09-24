@@ -1,0 +1,22 @@
+# --- IMPORTS ----
+imports:
+    - { resource: "@AppBundle/Resources/config/manager.yml" }
+    - { resource: "@AppBundle/Resources/config/handler.yml" }
+
+services:
+    app.form.type.user:
+        class: AppBundle\Form\UserType
+        tags:
+            - { name: form.type }
+
+    app.form.type.user_registration:
+        class: UserBundle\Form\UserRegistrationType
+
+#    app.form.type.user_profile:
+#        class: AppBundle\Form\UserProfileType
+#        parent: app.form.type.user
+
+#    app.form.type.login:
+#        class: UserBundle\Form\LoginFormType
+#        tags:
+#            - { name: form.type }

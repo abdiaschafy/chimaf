@@ -1,0 +1,16 @@
+<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset">
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4 user-account">
+            <h3 class="text-primary">{{ 'password_change.form.title.reinitialisation_mot_de_passe' | trans({}, 'password_change_form') }}</h3>
+            <hr>
+            {{ form_widget(form) }}
+            <div class="row">
+                <div class="col-xs-4 col-sm-4 col-md-5 pull-right">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-info col-lg-12 cil-btn margin-bottom-4" value="{{ 'ux.button_label.reinitialiser_mot_de_passe' | trans({}, 'ux') }}" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
