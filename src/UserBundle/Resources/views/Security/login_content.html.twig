@@ -1,0 +1,60 @@
+{% trans_default_domain 'fos_user_bundle' %}
+
+<div class="top-content">
+    <div class="inner-bg">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3 form-box">
+                    <div class="form-top">
+                        <div class="form-top-left">
+                            <h3>Login to our site</h3>
+                            <p>Enter your username and password to log on:</p>
+                        </div>
+                        <div class="form-top-right">
+                            <i class="fa fa-lock"></i>
+                        </div>
+                    </div>
+                    <div class="form-bottom">
+
+                        {% if error %}
+                            <div class="alert alert-danger text-center">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        <form action="{{ path("fos_user_security_check") }}" method="post">
+
+                            {% if csrf_token %}
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                            {% endif %}
+
+                            <div class="form-group">
+                                {{ form_label(loginForm._username) }}
+                                {{ form_widget(loginForm._username, {'full_name': '_username','id': 'username', 'value' : last_username }) }}
+                                {{ form_errors(loginForm._username) }}
+                            </div>
+                            <div class="form-group">
+                                {{ form_label(loginForm._password) }}
+                                {{ form_widget(loginForm._password, {'full_name': '_password','id': 'password'}) }}
+                                {{ form_errors(loginForm._password) }}
+                            </div>
+                            <div class="form-group">
+                                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                                <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                            </div>
+                            <div class="form-group pull-right">
+                                {{ form_widget(loginForm._submit) }}
+                            </div>
+
+                        </form>
+
+                        <a href="{{ path('fos_user_resetting_request') }}" class="forgot-password">
+                            {{ 'resetting.reset.password' | trans({}, 'fos_user_bundle') }}
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

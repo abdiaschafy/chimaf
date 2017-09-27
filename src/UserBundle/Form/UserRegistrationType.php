@@ -3,11 +3,13 @@ namespace UserBundle\Form;
 
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 class UserRegistrationType extends AbstractType
@@ -20,8 +22,8 @@ class UserRegistrationType extends AbstractType
 
         $builder->
         add('last_name', TextType::class, array(
-            'label' => 'creation_acces.form.field_label.nom',
-            'label_attr' => array('class' => 'text-default required'),
+            'label' => 'form.last_name',
+            'label_attr' => array('class' => 'text-color-white required'),
             'required' => false,
             'attr' => array(
                 'class' => 'form-control input-sm',
@@ -29,8 +31,8 @@ class UserRegistrationType extends AbstractType
             )
         ))->
         add('first_name', TextType::class, array(
-            'label' => 'creation_acces.form.field_label.prenom',
-            'label_attr' => array('class' => 'text-default required'),
+            'label' => 'form.first_name',
+            'label_attr' => array('class' => 'text-color-white required'),
             'required' => false,
             'attr' => array(
                 'class' => 'form-control input-sm',
@@ -38,41 +40,53 @@ class UserRegistrationType extends AbstractType
             )
         ))->
         add('email', EmailType::class, array(
-            'label' => 'creation_acces.form.field_label.mail',
-            'label_attr' => array('class' => 'text-default required'),
+            'label' => 'form.email',
+            'label_attr' => array('class' => 'text-color-white required'),
             'required' => false,
             'attr' => array(
                 'class' => 'form-control input-sm',
             )
         ))->
         add('phone', TextType::class, array(
-            'label' => 'creation_acces.form.field_label.telephone',
+            'label' => 'form.telephone',
             'required' => false,
-            'label_attr' => array('class' => 'text-default required'),
+            'label_attr' => array('class' => 'text-color-white required'),
             'attr' => array(
-                'class' => 'form-control input-sm',
+                'class' => 'form-control input-sm height-30',
                 'maxlength' => 15
             )
         ))->
         add('fax', TextType::class, array(
-            'label' => 'creation_acces.form.field_label.fax',
+            'label' => 'form.fax',
             'required' => false,
-            'label_attr' => array('class' => 'text-default'),
+            'label_attr' => array('class' => 'text-color-white'),
             'attr' => array(
-                'class' => 'form-control input-sm',
+                'class' => 'form-control input-sm height-30',
                 'maxlength' => 30
             )
         ))
-        ->add('language', TextType::class, array(
+        ->add('language', ChoiceType::class, array(
             'required' => true,
-            'label' => 'creation_acces.form.field_label.langue',
-            'label_attr' => array('class' => 'text-default'),
+            'label' => 'form.laguage',
+            'label_attr' => array('class' => 'text-color-white'),
+            'choices' => array(
+                'Français' => 'fr',
+                'English' => 'en'
+            )
         ))
         ->add('save', SubmitType::class, array(
-            'label' => 'creation_acces.form.button_label.demande_creation_compte',
+            'label' => 'registration.submit',
+            'attr' => array('class' => 'btn btn-success')
         ));
         $builder->remove('plainPassword');
         $builder->remove('username');
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults(array(
+            'translation_domain' => 'fos_user_bundle'
+        ));
     }
 
     public function getParent()

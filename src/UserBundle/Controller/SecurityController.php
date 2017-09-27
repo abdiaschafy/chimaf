@@ -1,12 +1,12 @@
 <?php
 namespace UserBundle\Controller;
 
-use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use FOS\UserBundle\Controller\SecurityController as BaseController;
+use UserBundle\Form\LoginFormType;
 
 class SecurityController extends BaseController
 {
@@ -17,8 +17,6 @@ class SecurityController extends BaseController
      */
     public function loginAction(Request $request)
     {
-        $formFactory = $this->get('fos_user.registration.form.factory');
-        /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
 
         $authErrorKey = Security::AUTHENTICATION_ERROR;
@@ -45,13 +43,13 @@ class SecurityController extends BaseController
             ? $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue()
             : null;
 
-        $form = $formFactory->createForm();
-        $form->setData(new User());
+        $loginForm = $this->createForm(LoginFormType::class);
+
         return $this->renderLogin(array(
+            'loginForm' => $loginForm->createView(),
             'last_username' => $lastUsername,
             'error' => $error,
             'csrf_token' => $csrfToken,
-            'loginForm' => $form->createView(),
         ));
     }
 
