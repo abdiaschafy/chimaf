@@ -4,6 +4,18 @@ parameters:
 #    parameter_name: value
 
 services:
-#    service_name:
-#        class: AppBundle\Directory\ClassName
-#        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    UserBundle\Controller\RegistrationController:
+        class: UserBundle\Controller\RegistrationController
+        autowire: true # or define your controller constructor and configure its arguments explicitly
+        tags:
+            - name: controller.service_arguments
+
+    app.form.registration:
+        class: UserBundle\Form\UserRegistrationType
+        tags:
+            - { name: form.type, alias: app_user_registration }
+
+    app.form.login:
+        class: UserBundle\Form\LoginFormType
+        tags:
+            - { name: form.type, alias: app_user_login }

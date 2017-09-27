@@ -1,6 +1,8 @@
 <?php
+
 namespace UserBundle\Controller;
 
+use AppBundle\Entity\User;
 use FOS\UserBundle\Event\FilterUserResponseEvent;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
@@ -9,16 +11,27 @@ use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use FOS\UserBundle\Controller\RegistrationController as BaseController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use UserBundle\Form\UserRegistrationType;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use FOS\UserBundle\Controller\RegistrationController as BaseController;
+
 
 class RegistrationController extends BaseController
 {
+    /**
+     * @var UserPasswordEncoder
+     */
+    private $encoder;
+
+    public function __construct(UserPasswordEncoder $encoder)
+    {
+        $this->encoder = $encoder;
+    }
+
     /**
      * @param Request $request
      *
@@ -43,7 +56,7 @@ class RegistrationController extends BaseController
             return $event->getResponse();
         }
 
-        $form = $this->createForm(UserRegistrationType::class);
+        $form = $formFactory->createForm();
         $form->setData($user);
 
         $form->handleRequest($request);
@@ -53,7 +66,7 @@ class RegistrationController extends BaseController
                 $event = new FormEvent($form, $request);
                 $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 
-                $user->setPlainPassword('');
+                $user->setPassword($this->generatePassWord($user));
                 $userManager->updateUser($user);
 
                 if (null === $response = $event->getResponse()) {
@@ -74,7 +87,7 @@ class RegistrationController extends BaseController
             }
         }
 
-        return $this->render('@User/Registration/register.html.twig', array(
+        return $this->render('@FOSUser/Registration/register.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -168,5 +181,18 @@ class RegistrationController extends BaseController
         if ($this->get('session')->has($key)) {
             return $this->get('session')->get($key);
         }
+    }
+
+    /**
+     * Permettra d'envoyer un mail à l'utilisateur avec le lien vers l'action confirmAction
+     * lien contenant le token généré en même temps que l'identifiant user qui sera dans le mail
+     */
+    private function generatePassWord(UserInterface $user)
+    {
+        // 1- générer le mot de passe
+        // 2- générer l'url de confirmation
+        // 3- sauvegarder le salt, le mote de passe
+        // 4- envoyer le mot de passe non encodé par mail
+        return $this->encoder->encodePassword($user, '123');
     }
 }

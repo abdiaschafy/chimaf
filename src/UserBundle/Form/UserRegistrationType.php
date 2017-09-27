@@ -4,10 +4,10 @@ namespace UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 
 class UserRegistrationType extends AbstractType
@@ -62,26 +62,32 @@ class UserRegistrationType extends AbstractType
                 'class' => 'form-control input-sm',
                 'maxlength' => 30
             )
-        ))->
-        add('language', TextType::class, array(
+        ))
+        ->add('language', TextType::class, array(
             'required' => true,
             'label' => 'creation_acces.form.field_label.langue',
             'label_attr' => array('class' => 'text-default'),
-        ))->
-        add('save', SubmitType::class, array(
+        ))
+        ->add('save', SubmitType::class, array(
             'label' => 'creation_acces.form.button_label.demande_creation_compte',
         ));
+        $builder->remove('plainPassword');
+        $builder->remove('username');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function getParent()
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\User',
-            'translation_domain' => 'fos_user_bundle',
-            'cascade_validation' => true
-        ));
+        return 'FOS\UserBundle\Form\Type\RegistrationFormType';
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'user_registration';
+    }
+
+    // For Symfony 2.x
+    public function getName()
+    {
+        return $this->getBlockPrefix();
     }
 }

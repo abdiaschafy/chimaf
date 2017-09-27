@@ -1,17 +1,13 @@
 <?php
 namespace UserBundle\Controller;
 
+use AppBundle\Entity\User;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use FOS\UserBundle\Controller\SecurityController as BaseController;
-use UserBundle\Form\LoginFormType;
 
-/**
- * Class SecurityController
- * @package UserBundle\Controller
- */
 class SecurityController extends BaseController
 {
     /**
@@ -21,6 +17,7 @@ class SecurityController extends BaseController
      */
     public function loginAction(Request $request)
     {
+        $formFactory = $this->get('fos_user.registration.form.factory');
         /** @var $session \Symfony\Component\HttpFoundation\Session\Session */
         $session = $request->getSession();
 
@@ -48,16 +45,15 @@ class SecurityController extends BaseController
             ? $this->get('security.csrf.token_manager')->getToken('authenticate')->getValue()
             : null;
 
-        $form = $this->createForm(LoginFormType::class);
-
+        $form = $formFactory->createForm();
+        $form->setData(new User());
         return $this->renderLogin(array(
-            'loginForm'     =>  $form->createView(),
             'last_username' => $lastUsername,
             'error' => $error,
             'csrf_token' => $csrfToken,
+            'loginForm' => $form->createView(),
         ));
     }
-
 
     /**
      * Renders the login template with the given parameters. Overwrite this function in
@@ -69,6 +65,16 @@ class SecurityController extends BaseController
      */
     protected function renderLogin(array $data)
     {
-        return $this->render('@User/Security/login.html.twig', $data);
+        return $this->render('@FOSUser/Security/login.html.twig', $data);
+    }
+
+    public function checkAction()
+    {
+        throw new \RuntimeException('You must configure the check path to be handled by the firewall using form_login in your security firewall configuration.');
+    }
+
+    public function logoutAction()
+    {
+        throw new \RuntimeException('You must activate the logout in your security firewall configuration.');
     }
 }
