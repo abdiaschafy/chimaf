@@ -1,0 +1,6 @@
+#services:
+#    UserBundle\Controller\RegistrationController:
+#        class: UserBundle\Controller\RegistrationController
+#        autowire: true # or define your controller constructor and configure its arguments explicitly
+#        tags:
+#            - name: controller.service_arguments

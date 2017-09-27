@@ -7,7 +7,24 @@ body{
 .navbar {
     border-radius: 0;
 }
+.navbar-login
+{
+    width: 305px;
+    padding: 10px;
+    padding-bottom: 0px;
+}
 
+.navbar-login-session
+{
+    padding: 10px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+}
+
+.icon-size
+{
+    font-size: 87px;
+}
 #login-dp{
     min-width: 250px;
     padding: 14px 14px 0;

@@ -5,7 +5,6 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LoginFormType extends AbstractType
 {
@@ -29,16 +28,13 @@ class LoginFormType extends AbstractType
         ;
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function getBlockPrefix()
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\User',
-            'translation_domain' => 'fos_user_bundle'
-        ));
+        return 'app_user_login';
     }
 
     public function getName()
     {
-        return 'login_formtype';
+        return $this->getBlockPrefix();
     }
 }

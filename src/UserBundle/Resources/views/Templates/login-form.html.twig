@@ -17,7 +17,7 @@
                     <div class="form-bottom">
                         <form action="{{ path("fos_user_security_check") }}" method="post" class="form-signin cil-form" role="form">
 
-                            <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                            {{ form_widget(loginForm._token) }}
 
                             <div class="text-danger">
                                 {{ form_errors(loginForm._username) }}
