@@ -84,6 +84,7 @@ form:
     telephone: 'Numéro de téléphone'
     fax: 'Numéro de fax'
     laguage: 'Langue'
+    roles: 'Roles'
     email: 'Adresse e-mail'
     current_password: 'Mot de passe actuel'
     password: 'Mot de passe'

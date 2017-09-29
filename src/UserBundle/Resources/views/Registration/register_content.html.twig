@@ -18,6 +18,11 @@
                         <form action="{{ path('fos_user_registration_register') }}" method="POST" class="fos_user_registration_register">
 
                             <div class="form-group">
+                                {{ form_label(form.groups) }}
+                                {{ form_widget(form.groups) }}
+                                {{ form_errors(form.groups) }}
+                            </div>
+                            <div class="form-group">
                                 {{ form_label(form.email) }}
                                 {{ form_widget(form.email) }}
                                 {{ form_errors(form.email) }}

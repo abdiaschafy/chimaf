@@ -145,16 +145,13 @@ class User implements UserInterface, GroupableInterface
     protected $confirmationToken;
 
     /**
-     * @var Collection
-     * @ORM\Column(name="groupes", type="array", length=255, nullable=true)
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Group")
+     * @ORM\JoinTable(name="user_role",
+     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+     * )
      */
     protected $groups;
-
-    /**
-     * @var array
-     * @ORM\Column(name="roles", type="array", length=255, nullable=true)
-     */
-    protected $roles;
 
     /**
      * Random string sent to the user email address in order to verify it
@@ -210,7 +207,6 @@ class User implements UserInterface, GroupableInterface
     {
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->enabled = false;
-        $this->roles = array();
     }
 
     /**
@@ -306,23 +302,6 @@ class User implements UserInterface, GroupableInterface
     public function setFax($fax)
     {
         $this->fax = $fax;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function addRole($role)
-    {
-        $role = strtoupper($role);
-        if ($role === static::ROLE_DEFAULT) {
-            return $this;
-        }
-
-        if (!in_array($role, $this->roles, true)) {
-            $this->roles[] = $role;
-        }
-
-        return $this;
     }
 
     /**
@@ -466,16 +445,19 @@ class User implements UserInterface, GroupableInterface
      */
     public function getRoles()
     {
-        $roles = $this->roles;
+        // we need to make sure to have at least one role
+        $roles[] = static::ROLE_DEFAULT;
 
         foreach ($this->getGroups() as $group) {
             $roles = array_merge($roles, $group->getRoles());
         }
 
-        // we need to make sure to have at least one role
-        $roles[] = static::ROLE_DEFAULT;
-
         return array_unique($roles);
+    }
+    
+    public function getRole()
+    {
+        return $this->groups[0]->getName();
     }
 
     /**
@@ -521,19 +503,6 @@ class User implements UserInterface, GroupableInterface
     public function isSuperAdmin()
     {
         return $this->hasRole(static::ROLE_SUPER_ADMIN);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeRole($role)
-    {
-        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
-            unset($this->roles[$key]);
-            $this->roles = array_values($this->roles);
-        }
-
-        return $this;
     }
 
     /**
@@ -672,20 +641,6 @@ class User implements UserInterface, GroupableInterface
     /**
      * {@inheritdoc}
      */
-    public function setRoles(array $roles)
-    {
-        $this->roles = array();
-
-        foreach ($roles as $role) {
-            $this->addRole($role);
-        }
-
-        return $this;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getGroups()
     {
         return $this->groups ?: $this->groups = new ArrayCollection();
@@ -742,5 +697,43 @@ class User implements UserInterface, GroupableInterface
     public function __toString()
     {
         return (string) $this->getUsername();
+    }
+
+    /**
+     * Sets the roles of the user.
+     *
+     * This overwrites any previous roles.
+     *
+     * @param array $roles
+     *
+     * @return self
+     */
+    public function setRoles(array $roles)
+    {
+        // TODO: Implement setRoles() method.
+    }
+
+    /**
+     * Adds a role to the user.
+     *
+     * @param string $role
+     *
+     * @return self
+     */
+    public function addRole($role)
+    {
+        // TODO: Implement addRole() method.
+    }
+
+    /**
+     * Removes a role to the user.
+     *
+     * @param string $role
+     *
+     * @return self
+     */
+    public function removeRole($role)
+    {
+        // TODO: Implement removeRole() method.
     }
 }
