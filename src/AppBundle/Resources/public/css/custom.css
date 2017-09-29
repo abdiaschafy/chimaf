@@ -4,6 +4,12 @@ body{
 .text-color-white{
     color: #fff;
 }
+.text-color-black{
+    color: #000;
+}
+.text-bold{
+    font-weight: bold;
+}
 .navbar {
     border-radius: 0;
 }
@@ -74,4 +80,21 @@ body{
         background-color: inherit;
         border-top:0 none;
     }
+}
+ul {
+    list-style-type: none;
+}
+
+input[type="text"], input[type="password"], textarea, textarea.form-control {
+    height: 30px;
+    margin: 0;
+    padding: 0 20px;
+    vertical-align: middle;
+    background: #fff;
+    border: 3px solid #fff;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 30px;
+    color: #888;
 }
