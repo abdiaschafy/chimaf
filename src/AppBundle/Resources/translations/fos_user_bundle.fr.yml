@@ -35,15 +35,18 @@ registration:
     flash:
         user_created: 'L''utilisateur a été créé avec succès.'
     email:
-        subject: 'Bienvenue %username% !'
+        subject: 'Bienvenue %username% !<br>'
         message: |
-            Bonjour %username% !
+            Bonjour %username% !<br><br>
 
-            Pour valider votre compte utilisateur, merci de vous rendre sur %confirmationUrl%
+            Pour valider votre compte utilisateur, merci de vous rendre sur <a href='%confirmationUrl%'>Confirmer</a><br>
 
-            Ce lien ne peut être utilisé qu'une seule fois pour valider votre compte.
+            Ce lien ne peut être utilisé qu'une seule fois pour valider votre compte.<br><br>
 
-            Cordialement,
+            Login: %login%<br>
+            Password: %password%<br><br>
+
+            Cordialement,<br>
             L'équipe
 
 resetting:

@@ -1,8 +1,12 @@
 <?php
 namespace UserBundle\Controller;
 
+use FOS\UserBundle\Event\GetResponseUserEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Security;
 use FOS\UserBundle\Controller\SecurityController as BaseController;

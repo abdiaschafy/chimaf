@@ -2,21 +2,21 @@
 
 namespace UserBundle\Controller;
 
-use AppBundle\Entity\User;
-use FOS\UserBundle\Event\FilterUserResponseEvent;
+use AppBundle\Services\Mailer;
 use FOS\UserBundle\Event\FormEvent;
 use FOS\UserBundle\Event\GetResponseUserEvent;
 use FOS\UserBundle\Form\Factory\FactoryInterface;
 use FOS\UserBundle\FOSUserEvents;
 use FOS\UserBundle\Model\UserInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
+use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Controller\RegistrationController as BaseController;
 
 
@@ -27,9 +27,21 @@ class RegistrationController extends BaseController
      */
     private $encoder;
 
-    public function __construct(UserPasswordEncoder $encoder)
+    /**
+     * @var Mailer
+     */
+    private $mailerService;
+
+    /**
+     * @var TokenGeneratorInterface
+     */
+    private $tokenGenerator;
+
+    public function __construct(UserPasswordEncoder $encoder, Mailer $mailerService, TokenGeneratorInterface $tokenGenerator)
     {
         $this->encoder = $encoder;
+        $this->mailerService = $mailerService;
+        $this->tokenGenerator = $tokenGenerator;
     }
 
     /**
@@ -47,10 +59,9 @@ class RegistrationController extends BaseController
         $dispatcher = $this->get('event_dispatcher');
 
         $user = $userManager->createUser();
-        $user->setEnabled(true);
 
         $event = new GetResponseUserEvent($user, $request);
-        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
+//        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_INITIALIZE, $event);
 
         if (null !== $event->getResponse()) {
             return $event->getResponse();
@@ -66,12 +77,18 @@ class RegistrationController extends BaseController
                 $event = new FormEvent($form, $request);
 //                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_SUCCESS, $event);
 
-                $user->setPassword($this->generatePassWord($user));
+                list($plainPwd, $encodedPwd, $confirmationUrl) = $this->generatePassWord($user);
+                $user->setPassword($encodedPwd);
+                if (null === $user->getConfirmationToken()) {
+                    $user->setConfirmationToken($this->tokenGenerator->generateToken());
+                }
                 $userManager->updateUser($user);
 
                 if (null === $response = $event->getResponse()) {
                     $url = $this->generateUrl('fos_user_registration_register');
                     $response = new RedirectResponse($url);
+                    // confirmation email
+                    $this->mailerService->sendConfirmationMail($user, $confirmationUrl, $plainPwd);
                 }
 
 //                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));
@@ -116,62 +133,6 @@ class RegistrationController extends BaseController
     }
 
     /**
-     * Receive the confirmation token from user email provider, login the user.
-     *
-     * @param Request $request
-     * @param string  $token
-     *
-     * @return Response
-     */
-    public function confirmAction(Request $request, $token)
-    {
-        /** @var $userManager \FOS\UserBundle\Model\UserManagerInterface */
-        $userManager = $this->get('fos_user.user_manager');
-
-        $user = $userManager->findUserByConfirmationToken($token);
-
-        if (null === $user) {
-            throw new NotFoundHttpException(sprintf('The user with confirmation token "%s" does not exist', $token));
-        }
-
-        /** @var $dispatcher EventDispatcherInterface */
-        $dispatcher = $this->get('event_dispatcher');
-
-        $user->setConfirmationToken(null);
-        $user->setEnabled(true);
-
-        $event = new GetResponseUserEvent($user, $request);
-        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_CONFIRM, $event);
-
-        $userManager->updateUser($user);
-
-        if (null === $response = $event->getResponse()) {
-            $url = $this->generateUrl('fos_user_registration_confirmed');
-            $response = new RedirectResponse($url);
-        }
-
-        $dispatcher->dispatch(FOSUserEvents::REGISTRATION_CONFIRMED, new FilterUserResponseEvent($user, $request, $response));
-
-        return $response;
-    }
-
-    /**
-     * Tell the user his account is now confirmed.
-     */
-    public function confirmedAction()
-    {
-        $user = $this->getUser();
-        if (!is_object($user) || !$user instanceof UserInterface) {
-            throw new AccessDeniedException('This user does not have access to this section.');
-        }
-
-        return $this->render('@FOSUser/Registration/confirmed.html.twig', array(
-            'user' => $user,
-            'targetUrl' => $this->getTargetUrlFromSession(),
-        ));
-    }
-
-    /**
      * @return mixed
      */
     private function getTargetUrlFromSession()
@@ -184,15 +145,14 @@ class RegistrationController extends BaseController
     }
 
     /**
-     * Permettra d'envoyer un mail à l'utilisateur avec le lien vers l'action confirmAction
-     * lien contenant le token généré en même temps que l'identifiant user qui sera dans le mail
+     * Génère l'url de confirmation de mail, le mot de passe utilisateur et retourne la version claire et encodée
+     * @param UserInterface $user
+     * @return array
      */
     private function generatePassWord(UserInterface $user)
     {
-        // 1- générer le mot de passe
-        // 2- générer l'url de confirmation
-        // 3- sauvegarder le salt, le mote de passe
-        // 4- envoyer le mot de passe non encodé par mail
-        return $this->encoder->encodePassword($user, '123');
+        $plainPwd = '123'; // à générer automatiquement
+        $confirmationUrl = $this->generateUrl('user_account_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
+        return array($plainPwd, $this->encoder->encodePassword($user, $plainPwd), $confirmationUrl);
     }
 }

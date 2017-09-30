@@ -1,8 +1,3 @@
-# --- IMPORTS ----
-imports:
-    - { resource: "@AppBundle/Resources/config/manager.yml" }
-    - { resource: "@AppBundle/Resources/config/handler.yml" }
-
 services:
     app.form.type.user:
         class: AppBundle\Form\UserType
@@ -11,6 +6,10 @@ services:
 
     app.form.type.user_registration:
         class: UserBundle\Form\UserRegistrationType
+
+    app.mailer:
+        class: AppBundle\Services\Mailer
+        arguments: ['@swiftmailer.mailer', '@templating.engine.twig']
 
 #    app.form.type.user_profile:
 #        class: AppBundle\Form\UserProfileType

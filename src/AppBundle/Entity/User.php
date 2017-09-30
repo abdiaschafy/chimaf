@@ -432,6 +432,11 @@ class User implements UserInterface, GroupableInterface
         return $this->lastLogin;
     }
 
+    public function getFullName()
+    {
+        return $this->last_name.' '.$this->first_name;    
+    }
+    
     /**
      * {@inheritdoc}
      */
