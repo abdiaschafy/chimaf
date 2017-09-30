@@ -31,7 +31,7 @@ class UserDatatable extends AbstractDatatable
         - r = le loader lors du chargement des données
         - t = la table
         =========================================================================================== **/
-        
+
         $this->language->set(array(
             'cdn_language_by_locale' => true
             //'language' => 'de'
@@ -48,12 +48,13 @@ class UserDatatable extends AbstractDatatable
             'individual_filtering_position' => 'head',
             'order' => array(array(0, 'asc')),
             'order_cells_top' => true,
-            //'global_search_type' => 'gt',
+            'global_search_type' => 'like',
             'search_in_non_visible_columns' => true,
             'dom'     =>    '<"row"
                             <"col-md-12"
                                 <"col-md-4 col-sm-4 text-left"l>
                                 <"col-md-4 col-sm-4 text-center">
+                                <"col-md-4 col-sm-4 text-center padding-5"f>
                             >
                          >
                          tr

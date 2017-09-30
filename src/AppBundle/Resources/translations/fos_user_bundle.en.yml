@@ -40,15 +40,18 @@ registration:
     flash:
         user_created: 'The user has been created successfully.'
     email:
-        subject: 'Welcome %username%!'
+        subject: 'Welcome %username%!<br>'
         message: |
-            Hello %username%!
+            Hello %username%!<br><br>
 
-            To finish activating your account - please visit %confirmationUrl%
+            To finish activating your account - please visit <a href='%confirmationUrl%'>Confirm</a><br>
 
-            This link can only be used once to validate your account.
+            This link can only be used once to validate your account.<br><br>
 
-            Regards,
+            Login: %login%<br>
+            Password: %password%<br><br>
+
+            Regards,<br>
             the Team.
 
 resetting:
