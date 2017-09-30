@@ -74,3 +74,24 @@ assetic:
                 - "%kernel.root_dir%/../vendor/bmatzner/fontawesome-bundle/Bmatzner/FontAwesomeBundle/Resources/public/less/font-awesome.less"
             filters: [cssrewrite, ?yui_js]
             output: css/fontawesome.css
+
+        datatables_js:
+            inputs:
+                - "@AppBundle/Resources/public/js/datatables/jquery.min.js"
+                - "@AppBundle/Resources/public/js/datatables/moment-with-locales.min.js"
+                - "@AppBundle/Resources/public/js/datatables/daterangepicker.min.js"
+                - "@AppBundle/Resources/public/js/datatables/datatables.min.js"
+                - "@AppBundle/Resources/public/js/datatables/bootstrap-editable.min.js"
+                - "@AppBundle/Resources/public/js/datatables/featherlight.min.js"
+            filters: [?yui_js]
+            output: js/datatables.js
+
+        datatables_css:
+            inputs:
+                - "@AppBundle/Resources/public/css/datatables/datatables.min.css"
+                - "@AppBundle/Resources/public/css/datatables/font-awesome.min.css"
+                - "@AppBundle/Resources/public/css/datatables/daterangepicker.min.css"
+                - "@AppBundle/Resources/public/css/datatables/bootstrap-editable.css"
+                - "@AppBundle/Resources/public/css/datatables/featherlight.min.css"
+            filters: [cssrewrite, ?yui_js]
+            output: css/datatables.css
