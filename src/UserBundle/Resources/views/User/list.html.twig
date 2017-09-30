@@ -1,19 +1,26 @@
-{% trans_default_domain 'gestion_utilisateur_page' %}
-{% extends "@App/Page/Base/base.html.twig" %}
+{% trans_default_domain 'fos_user_bundle' %}
+{% extends "@App/Base/base.html.twig" %}
 
 {% block title %}
-    {{ parent() ~ " " ~ 'gestion_utilisateur.page.title.liste' | trans }}
+    {{ parent() ~ " " ~ 'user.managment' | trans }}
 {% endblock title %}
 
 {% block page_content %}
 
     <div class="row">
-        <div class="col-md-12">
-            <h2>{{ 'gestion_utilisateur.page.title.liste' | trans }}</h2>
+        <div class="col-md-12 text-left">
+            <h2>{{ 'user.list' | trans }}</h2>
             <hr>
         </div>
+        <div class="col-md-12 margin-bottom-20">
+            <a
+                    class="btn btn-success"
+                    href="{{ path('fos_user_registration_register') }}">
+                <i class="fa fa-plus"></i>&nbsp;New user
+            </a>
+        </div>
         <div class="col-md-12">
-            {{ datatable_render(datatable) }}
+            {{ sg_datatables_render(datatable) }}
         </div>
     </div>
 

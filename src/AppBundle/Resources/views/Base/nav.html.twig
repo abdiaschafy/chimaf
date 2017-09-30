@@ -47,7 +47,7 @@
                                             <p class="text-left small">{{ app.user.email }}</p>
                                             {% if is_granted('ROLE_ADMIN') %}
                                                 <p class="text-left">
-                                                    <a href="{{ path('fos_user_registration_register') }}"
+                                                    <a href="{{ path('user_list') }}"
                                                        class="btn btn-info btn-block btn-sm">
                                                         <i class="fa fa-cogs"></i>
                                                         Gérer les utilisateurs

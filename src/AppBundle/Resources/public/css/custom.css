@@ -10,6 +10,28 @@ body{
 .text-bold{
     font-weight: bold;
 }
+.margin-bottom-20 {
+    margin-bottom: 20px;
+}
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.dataTables_wrapper {
+    background: #000;
+    opacity: 0.8;
+}
+
+.dataTables_wrapper > table > tbody {
+    color: #000;
+    text-align: left;
+}
+.dataTables_wrapper > table > thead, .dataTables_length{
+    color: white;
+}
+.dataTables_length {
+    padding: 5px;
+}
 .navbar {
     border-radius: 0;
 }
