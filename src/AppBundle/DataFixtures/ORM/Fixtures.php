@@ -1,7 +1,9 @@
 <?php
 namespace AppBundle\DataFixtures\ORM;
 
+use AppBundle\Entity\CategorieProduit;
 use AppBundle\Entity\Group;
+use AppBundle\Entity\Produit;
 use AppBundle\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -34,6 +36,55 @@ class Fixtures extends Fixture
         $admin->setFirstName('Gabriel');
         $admin->setLanguage('fr');
         $manager->persist($admin);
+        $manager->flush();
+        $manager->flush();
+
+        /**
+         * CATEGORIE DES PRODUITS VENDUS
+         */
+        $charbon = new CategorieProduit('Charbon');
+        $elect = new CategorieProduit('Electricité');
+        $comestible = new CategorieProduit('Comestibles');
+        $sucre = new CategorieProduit('Sucre');
+        $manager->persist($elect);
+        $manager->persist($charbon);
+        $manager->persist($comestible);
+        $manager->persist($sucre);
+        $manager->flush();
+
+        /**
+         * PRODUITS VENDUS
+         */
+        $produitCharbon1 = new Produit($charbon, '123C1', 'Charbon et lignite', 25, 278 );
+        $produitCharbon2 = new Produit($charbon, '123C2', 'tourbe', 25, 278 );
+        $produitCharbon3 = new Produit($charbon, '123C3', 'bois de chauffe', 25, 278 );
+        $produitCharbon4 = new Produit($charbon, '123C4', 'briquettes', 25, 278 );
+        $manager->persist($produitCharbon1);
+        $manager->persist($produitCharbon2);
+        $manager->persist($produitCharbon3);
+        $manager->persist($produitCharbon4);
+
+        $produitElect1 = new Produit($elect, '0014E1', 'Electricité distribuée', 23, 415);
+        $produitElect2 = new Produit($elect, '0014E2', 'Eau chaude', 23, 415);
+        $produitElect3 = new Produit($elect, '0014E3', 'vapeur', 23, 415);
+        $manager->persist($produitElect1);
+        $manager->persist($produitElect2);
+        $manager->persist($produitElect3);
+
+        $prodComestible1 = new Produit($comestible, '14COM1', 'bois bruts ou sciés', 5, 157);
+        $prodComestible2 = new Produit($comestible, '14COM2', 'Liège brut', 5, 157);
+        $prodComestible3 = new Produit($comestible, '14COM3', 'Caoutchouc brut naturel', 5, 157);
+        $manager->persist($prodComestible1);
+        $manager->persist($prodComestible2);
+        $manager->persist($prodComestible3);
+
+        $prodSucre1 = new Produit($sucre, '45SUC01', 'Sucre', 178, 2587);
+        $prodSucre2 = new Produit($sucre, '45SUC02', 'chocolat', 19, 456);
+        $prodSucre3 = new Produit($sucre, '45SUC03', 'Confiserie', 19, 456);
+        $manager->persist($prodSucre1);
+        $manager->persist($prodSucre2);
+        $manager->persist($prodSucre3);
+
         $manager->flush();
     }
 
