@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,11 +32,20 @@ class Facture
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="dateFacture", type="datetimetz")
+     * @ORM\Column(name="dateFacture", type="datetime")
      */
     private $dateFacture;
 
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProduitFacture", mappedBy="facture")
+     */
+    private $produitsDeLaFacture;
 
+    public function __construct()
+    {
+        $this->produitsDeLaFacture = new ArrayCollection();
+    }
     /**
      * Get id
      *
@@ -92,6 +102,22 @@ class Facture
     public function getDateFacture()
     {
         return $this->dateFacture;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getProduitsDeLaFacture()
+    {
+        return $this->produitsDeLaFacture;
+    }
+
+    /**
+     * @param ArrayCollection $produitsDeLaFacture
+     */
+    public function setProduitsDeLaFacture(ArrayCollection $produitsDeLaFacture)
+    {
+        $this->produitsDeLaFacture = $produitsDeLaFacture;
     }
 }
 
