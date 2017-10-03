@@ -1,0 +1,77 @@
+{% trans_default_domain 'fos_user_bundle' %}
+{% extends "@App/Base/base.html.twig" %}
+
+{% block title %}
+    {{ parent() ~ " " ~ 'Liste des produits' }}
+{% endblock title %}
+
+{% block page_content %}
+
+    <div class="row">
+
+        <li>
+            {% for prod in app.session.get('cart') %}
+                id = {{ prod.id }}; qte = {{ prod.quantiteAchetee }}<br>
+            {% endfor %}
+        </li>
+
+        {{ form_start(form, {'action': path('cart_add', {'id': form.vars.value.id}), 'method': 'POST'}) }}
+            <div class="col-lg-12">
+                <h1 class="text-left text-bold">
+                    Achat des produits de type: {{ form.vars.value.nom }}
+                    <span style="display: none">{{ form_widget(form.nom) }}</span>
+                </h1>
+                <hr>
+                <div class="row">
+                    <div class="col-md-2 margin-bottom-10">
+                        <a href="{{ path('categorie_all') }}" class="btn btn-default pull-left">
+                            <i class="fa fa-chevron-circle-left"></i>
+                            Retour aux catégories
+                        </a>
+                    </div>
+                    <div class=" col-md-2 margin-bottom-10 pull-right">
+                        <button type="submit" class="btn btn-sm btn-success">Ajouter au panier</button>
+                    </div>
+                </div>
+                <div class="row">
+
+                    {% for produit in form.produits %}
+
+                        <div class="col-sm-6 col-md-4">
+                            <div class="thumbnail">
+                                <div class="row">
+                                    <img src="..." alt="...">
+                                    <div class="caption">
+                                        <h3 class="margin-left-10 text-info text-left">{{ produit.vars.value.designation }}</h3>
+                                        <p class="text-justify margin-left-10 margin-right-10">
+                                            Le Lorem Ipsum est simplement du faux texte employé dans la
+                                            composition et la mise en page avant impression.
+                                            Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500,
+                                            quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un
+                                            livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles,
+                                            mais s'est aussi adapté à la
+                                        </p>
+                                        <p><span style="display: none">{{ form_widget(produit.designation) }}</span></p>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-3 text-bold text-color-black">
+                                        {{ produit.vars.value.prixUnitaire }} FCFA
+                                        <span style="display: none">{{ form_widget(produit.prixUnitaire) }}</span>
+                                    </div>
+                                    <div class="col-md-3 pull-right margin-right-10">
+                                        {{ form_row(produit.quantiteAchetee) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        {{ form_widget(form._token) }}
+        {{ form_end(form, {'render_rest': false }) }}
+    </div>
+
+{% endblock  %}

@@ -88,9 +88,9 @@ class UserController extends Controller
      */
     public function editAction(User $user)
     {
-//        return $this->render('@User/Group/show.html.twig', array(
-//            'user' => $user
-//        ));
+        return $this->render('@User/Group/show.html.twig', array(
+            'user' => $user
+        ));
     }
 
 

@@ -1,0 +1,44 @@
+{% extends '@App/Base/base.html.twig' %}
+
+{% block page_content %}
+
+    <h1 class="text-left">Produit</h1>
+    <hr>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Designation du produit</th>
+            <th>Numéro du produit</th>
+            <th>Quantité du produit alerte</th>
+            <th>Quantité produit en stock</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ produit.id }}</td>
+                <td>{{ produit.designation }}</td>
+                <td>{{ produit.numero }}</td>
+                <td>{{ produit.quantiteAlerte }}</td>
+                <td>{{ produit.quantiteStock }}</td>
+                <td>
+                    <a  class="btn btn-info"
+                        title="Retour à la liste de produits"
+                        href="{{ path('produit_list') }}">
+                        <i class="fa fa-arrow-circle-right"></i>
+                    </a>
+                    <a  class="btn btn-success"
+                        title="Editer le produit {{ produit.designation }}"
+                        href="{{ path('produit_edit', { 'id': produit.id }) }}">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </a>
+                    <a  class="btn btn-danger"
+                        title="Supprimer le produit {{ produit.designation }}"
+                        href="{{ path('produit_delete', { 'id': produit.id }) }}">
+                        <i class="fa fa-minus"></i>
+                    </a>
+                </td>
+        </tbody>
+    </table>
+{% endblock %}

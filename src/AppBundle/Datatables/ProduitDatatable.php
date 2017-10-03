@@ -2,43 +2,27 @@
 
 namespace AppBundle\Datatables;
 
-use Sg\DatatablesBundle\Datatable\AbstractDatatable;
-use Sg\DatatablesBundle\Datatable\Column\ActionColumn;
 use Sg\DatatablesBundle\Datatable\Style;
 use Sg\DatatablesBundle\Datatable\Column\Column;
-use Sg\DatatablesBundle\Datatable\Column\DateTimeColumn;
-
+use Sg\DatatablesBundle\Datatable\Column\ActionColumn;
 /**
- * Class UserDatatable
+ * Class ProduitDatatable
  *
  * @package AppBundle\Datatables
  */
-class UserDatatable extends BaseDatatable
+class ProduitDatatable extends BaseDatatable
 {
     /**
      * {@inheritdoc}
      */
     public function buildDatatable(array $options = array())
     {
-        /** ==========================================================================================
-        NB: Il es possible d'enlever chaque élément présent dans le datatables en allant dans
-        la section $this->features->set, sous [extensions], dans l'array, ajouter les éléments du dom
-        et rétirer la lettre qui correspond à l'option à retiter.
-        - f = formulaire de recherche globale
-        - l = liste de sélection du nombre d'éléments par page
-        - i = informations: enregistrements xxxx dans xxx
-        - p = pagination
-        - r = le loader lors du chargement des données
-        - t = la table
-        =========================================================================================== **/
-
         $this->language->set(array(
             'cdn_language_by_locale' => true
             //'language' => 'de'
         ));
 
         $this->ajax->set(array(
-            'pipeline' => 5
         ));
 
         $this->options->set(array(
@@ -83,53 +67,46 @@ class UserDatatable extends BaseDatatable
         ));
 
         $this->columnBuilder
-            ->add('first_name', Column::class, array(
-                'title' => 'Prénom',
+            ->add('designation', Column::class, array(
+                'title' => 'Designation',
                 ))
-            ->add('last_name', Column::class, array(
-                'title' => 'Nom',
+            ->add('numero', Column::class, array(
+                'title' => 'Numero',
                 ))
-            ->add('email', Column::class, array(
-                'title' => 'Email',
+            ->add('quantiteAlerte', Column::class, array(
+                'title' => 'QauntiteAlerte',
                 ))
-            ->add('lastLogin', DateTimeColumn::class, array(
-                'title' => 'Dernière connexion',
-                'date_format' => 'L',
+            ->add('quantiteStock', Column::class, array(
+                'title' => 'QauntiteStock',
                 ))
-            ->add('language', Column::class, array(
-                'title' => 'Language',
+            ->add('categorie.nom', Column::class, array(
+                'title' => 'Category Nom',
                 ))
-            ->add('phone', Column::class, array(
-                'title' => 'Phone',
-                ))
-            ->add('groups.name', Column::class, array(
-                'title' => 'Role',
-                'orderable' => false,
-                'data' => 'groups[, ].name'
+            ->add('facturesDuProduit.id', Column::class, array(
+                'title' => 'FacturesDuProduit Id',
+                'data' => 'facturesDuProduit[, ].id'
                 ))
             ->add(null, ActionColumn::class, array(
                 'title' => $this->translator->trans('sg.datatables.actions.title'),
                 'actions' => array(
                     array(
-                        'route' => 'user_show',
+                        'route' => 'produit_show',
                         'route_parameters' => array(
                             'id' => 'id'
                         ),
-                        'label' => $this->translator->trans('sg.datatables.actions.show'),
                         'icon' => 'glyphicon glyphicon-eye-open',
                         'attributes' => array(
                             'rel' => 'tooltip',
                             'title' => $this->translator->trans('sg.datatables.actions.show'),
-                            'class' => 'btn btn-info btn-xs',
+                            'class' => 'btn btn-primary btn-xs',
                             'role' => 'button'
                         ),
                     ),
                     array(
-                        'route' => 'user_edit',
+                        'route' => 'produit_edit',
                         'route_parameters' => array(
                             'id' => 'id'
                         ),
-                        'label' => $this->translator->trans('sg.datatables.actions.edit'),
                         'icon' => 'glyphicon glyphicon-edit',
                         'attributes' => array(
                             'rel' => 'tooltip',
@@ -148,7 +125,7 @@ class UserDatatable extends BaseDatatable
      */
     public function getEntity()
     {
-        return 'AppBundle\Entity\User';
+        return 'AppBundle\Entity\Produit';
     }
 
     /**
@@ -156,6 +133,6 @@ class UserDatatable extends BaseDatatable
      */
     public function getName()
     {
-        return 'user_datatable';
+        return 'produit_datatable';
     }
 }

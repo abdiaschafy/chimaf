@@ -4,6 +4,7 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Thenbsp\CartBundle\Core\EntityInterface;
 
 /**
  * Produit
@@ -38,19 +39,31 @@ class Produit
      *
      * @ORM\Column(name="qte_alerte", type="integer")
      */
-    private $qauntiteAlerte;
+    private $quantiteAlerte;
     /**
      * @var int
      *
      * @ORM\Column(name="qte_stock", type="integer")
      */
-    private $qauntiteStock;
+    private $quantiteStock;
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="prix_unitaire", type="decimal")
+     */
+    private $prixUnitaire;
+
+    /**
+     * @var int
+     */
+    private $quantiteAchetee;
+    
     /**
      * @var CategorieProduit
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\CategorieProduit", inversedBy="produits", cascade={"persist"})
      * @ORM\JoinColumn(name="categorie_id", referencedColumnName="id")
      */
-    private $category;
+    private $categorie;
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\ProduitFacture", mappedBy="produit")
@@ -58,13 +71,24 @@ class Produit
     private $facturesDuProduit;
 
 
-    public function __construct(CategorieProduit $categorie, $numero, $designation, $qauntiteAlerte, $qauntiteStock)
+    public function __construct(
+        CategorieProduit $categorie = null, 
+        $numero = null, 
+        $designation = null, 
+        $qauntiteAlerte = null, 
+        $qauntiteStock = null,
+        $prixUnitaire = null
+    )
     {
-        $this->setCategory($categorie);
-        $this->setNumero($numero);
-        $this->setDesignation($designation);
-        $this->setQauntiteAlerte($qauntiteAlerte);
-        $this->setQauntiteStock($qauntiteStock);
+        if (null !== $categorie) {
+            $this->setCategorie($categorie);
+            $this->setNumero($numero);
+            $this->setDesignation($designation);
+            $this->setQuantiteAlerte($qauntiteAlerte);
+            $this->setQuantiteStock($qauntiteStock);
+            $this->setPrixUnitaire($prixUnitaire);
+        }
+        
         $this->facturesDuProduit = new ArrayCollection();
     }
     /**
@@ -104,18 +128,18 @@ class Produit
     /**
      * @return CategorieProduit
      */
-    public function getCategory()
+    public function getCategorie()
     {
-        return $this->category;
+        return $this->categorie;
     }
 
     /**
      * @param CategorieProduit $category
      * @return $this
      */
-    public function setCategory(CategorieProduit $category)
+    public function setCategorie(CategorieProduit $category)
     {
-        $this->category = $category;
+        $this->categorie = $category;
         return $this;
     }
 
@@ -138,39 +162,70 @@ class Produit
     /**
      * @return int
      */
-    public function getQauntiteAlerte()
+    public function getQuantiteAlerte()
     {
-        return $this->qauntiteAlerte;
+        return $this->quantiteAlerte;
     }
 
     /**
      * @param $qauntiteAlerte
      * @return $this
      */
-    public function setQauntiteAlerte($qauntiteAlerte)
+    public function setQuantiteAlerte($qauntiteAlerte)
     {
-        $this->qauntiteAlerte = $qauntiteAlerte;
+        $this->quantiteAlerte = $qauntiteAlerte;
         return $this;
     }
 
     /**
      * @return int
      */
-    public function getQauntiteStock()
+    public function getQuantiteStock()
     {
-        return $this->qauntiteStock;
+        return $this->quantiteStock;
     }
 
     /**
      * @param $qauntiteStock
      * @return $this
      */
-    public function setQauntiteStock($qauntiteStock)
+    public function setQuantiteStock($qauntiteStock)
     {
-        $this->qauntiteStock = $qauntiteStock;
+        $this->quantiteStock = $qauntiteStock;
         return $this;
     }
 
+    /**
+     * @return int
+     */
+    public function getQuantiteAchetee()
+    {
+        return $this->quantiteAchetee;
+    }
+
+    /**
+     * @param int $quantiteAchetee
+     */
+    public function setQuantiteAchetee($quantiteAchetee)
+    {
+        $this->quantiteAchetee = $quantiteAchetee;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPrixUnitaire()
+    {
+        return $this->prixUnitaire;
+    }
+
+    /**
+     * @param int $prixUnitaire
+     */
+    public function setPrixUnitaire($prixUnitaire)
+    {
+        $this->prixUnitaire = $prixUnitaire;
+    }
 
     /**
      * @return ArrayCollection
@@ -187,5 +242,42 @@ class Produit
     {
         $this->facturesDuProduit = $facturesDuProduit;
     }
+
+//    /**
+//     * String representation of object
+//     * @link http://php.net/manual/en/serializable.serialize.php
+//     * @return string the string representation of the object or null
+//     * @since 5.1.0
+//     */
+//    public function serialize()
+//    {
+//        return serialize(
+//            [
+//                $this->id,
+//                $this->designation,
+//                $this->quantiteAchetee,
+//            ]
+//        );
+//    }
+//
+//    /**
+//     * Constructs the object
+//     * @link http://php.net/manual/en/serializable.unserialize.php
+//     * @param string $serialized <p>
+//     * The string representation of the object.
+//     * </p>
+//     * @return void
+//     * @since 5.1.0
+//     */
+//    public function unserialize($serialized)
+//    {
+//        $data = unserialize($serialized);
+//        list(
+//            $this->id,
+//            $this->designation,
+//            $this->quantiteAchetee,
+//            ) = $data;
+//
+//    }
 }
 

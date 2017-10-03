@@ -21,24 +21,29 @@ class CategorieProduit
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
     /**
      * @var string
      *
      * @ORM\Column(name="nom", type="string", length=255)
      */
     private $nom;
-
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="icone", type="string", length=30)
+     */
+    private $icone;
     /**
      * O@var ArrayCollection
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Produit", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Produit", mappedBy="categorie")
      */
     private $produits;
 
 
-    public function __construct($nom)
+    public function __construct($nom, $icone)
     {
         $this->nom = $nom;
+        $this->icone = $icone;
         $this->produits = new ArrayCollection();
     }
     /**
@@ -115,6 +120,22 @@ class CategorieProduit
             $this->produits->removeElement($produit);
         }
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcone()
+    {
+        return $this->icone;
+    }
+
+    /**
+     * @param string $icone
+     */
+    public function setIcone($icone)
+    {
+        $this->icone = $icone;
     }
 }
 

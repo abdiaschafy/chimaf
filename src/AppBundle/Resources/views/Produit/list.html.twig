@@ -1,0 +1,27 @@
+{% trans_default_domain 'fos_user_bundle' %}
+{% extends "@App/Base/base.html.twig" %}
+
+{% block title %}
+    {{ parent() ~ " " ~ 'Liste des produits' }}
+{% endblock title %}
+
+{% block page_content %}
+
+    <div class="row">
+        <div class="col-md-12 text-left">
+            <h2>Liste des produits</h2>
+            <hr>
+        </div>
+        <div class="col-md-12 margin-bottom-20">
+            <a
+                    class="btn btn-success"
+                    href="{{ path('produit_new') }}">
+                <i class="fa fa-plus"></i>&nbsp;Ajouter un produit
+            </a>
+        </div>
+        <div class="col-md-12">
+            {{ sg_datatables_render(datatable) }}
+        </div>
+    </div>
+
+{% endblock  %}
