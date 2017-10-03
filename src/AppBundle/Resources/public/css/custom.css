@@ -1,5 +1,5 @@
 body{
-    background:url('http://www.wallpaperup.com/uploads/wallpapers/2012/10/21/20181/cad2441dd3252cf53f12154412286ba0.jpg');
+    background:url('http://www.wallpaperup.com/uploads/wallpapers/2014/09/08/438277/93b30d2ff9f4f99ceb2ddf1b9de1e99f.jpg');
 }
 .text-color-white{
     color: #fff;
@@ -16,17 +16,35 @@ body{
 .margin-bottom-10 {
     margin-bottom: 10px;
 }
+.margin-left-10 {
+    margin-left: 10px;
+}
+.margin-left-5 {
+    margin-left: 5px;
+}
+.margin-right-10 {
+    margin-right: 10px;
+}
+.margin-right-5 {
+    margin-right: 5px;
+}
 .padding-10 {
     padding: 10px;
 }
 .padding-5 {
     padding: 5px;
 }
-
+.requiredField:after {
+    content:" *";
+    color: #ff0000;
+}
 .dataTables_wrapper {
     background: #e7e7e7;
 }
-
+.thumbnail {
+    border-radius: 0px;
+    opacity: 0.8;
+}
 .dataTables_wrapper > table > tbody {
     color: #000;
     text-align: left;
@@ -124,4 +142,20 @@ input[type="text"], input[type="password"], textarea, textarea.form-control {
     font-weight: 300;
     line-height: 30px;
     color: #888;
+}
+
+.invoice-title h2, .invoice-title h3 {
+    display: inline-block;
+}
+
+.table > tbody > tr > .no-line {
+    border-top: none;
+}
+
+.table > thead > tr > .no-line {
+    border-bottom: none;
+}
+
+.table > tbody > tr > .thick-line {
+    border-top: 2px solid;
 }

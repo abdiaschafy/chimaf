@@ -79,9 +79,6 @@ class RegistrationController extends BaseController
 
                 list($plainPwd, $encodedPwd, $confirmationUrl) = $this->generatePassWord($user);
                 $user->setPassword($encodedPwd);
-                if (null === $user->getConfirmationToken()) {
-                    $user->setConfirmationToken($this->tokenGenerator->generateToken());
-                }
                 $userManager->updateUser($user);
 
                 if (null === $response = $event->getResponse()) {
@@ -152,6 +149,9 @@ class RegistrationController extends BaseController
     private function generatePassWord(UserInterface $user)
     {
         $plainPwd = '123'; // à générer automatiquement
+        if (null === $user->getConfirmationToken()) {
+            $user->setConfirmationToken($this->tokenGenerator->generateToken());
+        }
         $confirmationUrl = $this->generateUrl('user_account_confirm', array('token' => $user->getConfirmationToken()), UrlGeneratorInterface::ABSOLUTE_URL);
         return array($plainPwd, $this->encoder->encodePassword($user, $plainPwd), $confirmationUrl);
     }
