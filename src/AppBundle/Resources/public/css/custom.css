@@ -1,5 +1,6 @@
 body{
-    background:url('http://www.wallpaperup.com/uploads/wallpapers/2014/09/08/438277/93b30d2ff9f4f99ceb2ddf1b9de1e99f.jpg');
+    /*background:url('http://www.wallpaperup.com/uploads/wallpapers/2014/09/08/438277/93b30d2ff9f4f99ceb2ddf1b9de1e99f.jpg');*/
+    background-color: #FAFAFA !important;
 }
 .text-color-white{
     color: #fff;
@@ -41,12 +42,12 @@ body{
     content:" *";
     color: #ff0000;
 }
+.title-text {
+    color: #4EA6BC;
+    font-weight: bold;
+}
 .dataTables_wrapper {
     background: #e7e7e7;
-}
-.thumbnail {
-    border-radius: 0px;
-    opacity: 0.8;
 }
 .dataTables_wrapper > table > tbody {
     color: #000;
@@ -58,8 +59,21 @@ body{
 .dataTables_length {
     padding: 5px;
 }
-.navbar {
+.chimaf-nav{
+    background: #4EA6BC;
+}
+.chimaf-navbar {
+    border: none;
+    border-radius: 0 !important;
+    padding: 5px;
+    background: #30373B;
+    color: #fff;
+}
+.navbar-nav > li > .dropdown-menu {
+    margin-top: 5px;
     border-radius: 0;
+    border: none;
+    background-color: #f8f8f8;
 }
 .navbar-login
 {
@@ -74,7 +88,11 @@ body{
     padding-bottom: 0px;
     padding-top: 0px;
 }
-
+.navbar {
+    position: relative;
+    margin-bottom: 0;
+    border: none;
+}
 .icon-size
 {
     font-size: 87px;
@@ -163,11 +181,15 @@ input[type="text"], input[type="password"], textarea, textarea.form-control {
     border-top: 2px solid;
 }
 .chimaf-thumbnail {
-    border-radius: 2px;
     box-shadow: 0 2px 2px 0 rgba(0,0,255, 0.5), 0 0 0 1px rgba(0,0,255,0.08);
     box-sizing: border-box;
-    opacity: 0.8;
+    opacity: 1;
 }
+.thumbnail{
+    border-radius: 0 !important;
+    border: none !important;
+}
+
 .chimaf-h3 {
     font-size: 12px;
     font-weight: bold;
