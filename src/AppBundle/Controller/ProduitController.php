@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 use AppBundle\Datatables\ProduitDatatable;
 use AppBundle\Entity\CategorieProduit;
 use AppBundle\Entity\Produit;
+use AppBundle\Form\CategorieType;
 use Sg\DatatablesBundle\Datatable\DatatableInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -58,8 +59,7 @@ class ProduitController extends Controller
      */
     public function produitsCategorieAction(Request $request, CategorieProduit $categorieProduit)
     {
-        $request->getSession()->clear();
-        $form = $this->createForm('AppBundle\Form\CategorieType', $categorieProduit);
+        $form = $this->createForm(CategorieType::class, $categorieProduit);
         $form->handleRequest($request);
 
         return $this->render('@App/Produit/produits_par_categorie.html.twig', array(

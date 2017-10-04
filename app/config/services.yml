@@ -23,3 +23,8 @@ services:
         class: UserBundle\Form\LoginFormType
         tags:
             - { name: form.type, alias: app_user_login }
+
+    twig.extension.text:
+            class: Twig_Extensions_Extension_Text
+            tags:
+                - { name: twig.extension }

@@ -28,7 +28,7 @@ class ProduitPanierType extends AbstractType
                 'required' => false,
                 'label' => 'Quantité',
                 'label_attr' => array('class' => 'text-default'),
-                'attr' => array('class' => 'form-control')
+                'attr' => array('class' => 'form-control', 'min' => 1)
             ))
             ->add('prixUnitaire', IntegerType::class, array(
                 'required' => false,
