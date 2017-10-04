@@ -8,14 +8,17 @@
 {% block page_content %}
 
     <div class="row">
-        <div class="col-md-12 text-left">
-            <h2>{{ 'user.list' | trans }}</h2>
-            <hr>
-        </div>
+        <h1 class="text-left title-text margin-left-10">
+            {{ 'user.list' | trans }}
+        </h1>
+        <hr>
+    </div>
+
+    <div class="row">
         <div class="col-md-12 margin-bottom-20">
             <a
-                    class="btn btn-success"
-                    href="{{ path('fos_user_registration_register') }}">
+                class="btn btn-success"
+                href="{{ path('fos_user_registration_register') }}">
                 <i class="fa fa-plus"></i>&nbsp;New user
             </a>
         </div>

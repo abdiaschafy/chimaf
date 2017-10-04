@@ -7,6 +7,7 @@
     {{ parent() }}
 
     {{ form_start(form) }}
+    <div class="row">
         <div class="form-group text-left">
             <label class="control-label requiredField" for="email">
                 {{ form_label(form.designation) }}
@@ -50,6 +51,8 @@
         <div class="form-group pull-right">
             <button type="submit" class="btn btn-success">Enregister</button>
         </div>
+    </div>
+
 
     {{ form_end(form) }}
 

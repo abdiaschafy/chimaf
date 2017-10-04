@@ -1,4 +1,4 @@
-<div class="navbar navbar-default" role="navigation">
+<div class="navbar chimaf-navbar" role="navigation">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -7,22 +7,22 @@
                 <span class="icon-bar"></span>
             </button>
             <a href="{{ path('chimaf_home') }}" class="navbar-brand">
-            <span class="text-primary"><i class="fa fa-globe">CHIMAF SARL</i></span>
+            <span class="text-color-white"><i class="fa fa-globe"> CHIMAF SARL</i></span>
             </a>
         </div>
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="{{ path('chimaf_home') }}"><i class="fa fa-home icon-white"></i> Accueil</a></li>
+                <li><a href="{{ path('chimaf_home') }}" class="text-color-white"><i class="fa fa-home icon-white"></i> Accueil</a></li>
                 <li class="divider-vertical"></li>
                 <li>
-                    <a href="{{ path('categorie_all') }}">
+                    <a href="{{ path('categorie_all') }}" class="text-color-white">
                         <i class="fa fa-table"></i> Nos Produits
                     </a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <a href="{{ path('cart_list') }}">
+                    <a href="{{ path('cart_list') }}" class="text-color-white">
                         <i class="fa fa-shopping-cart"></i> Votre panier
                         {% if app.session.get('cart')|length > 0 %}
                             <span class="badge" style="background: red;">{{ app.session.get('cart')|length }}</span>
@@ -31,7 +31,7 @@
                 </li>
                 {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="#" class="dropdown-toggle text-color-white" data-toggle="dropdown">
                             <i class="fa {{ is_granted('ROLE_ADMIN') ? 'fa-user-secret text-success' : 'fa-user' }}"></i>
                             <span class="text-bold">&nbsp;Bonjour,</span>
                             <span class="text-color-black text-bold">{{ app.user.firstname }}</span>
@@ -81,7 +81,7 @@
                     </li>
                 {% else %}
                     <li>
-                        <a href="{{ path('fos_user_security_login') }}"><i class="fa fa-lock"></i> Login</a>
+                        <a href="{{ path('fos_user_security_login') }}" class="text-color-white"><i class="fa fa-lock"></i> Login</a>
                     </li>
                 {% endif %}
             </ul>
