@@ -137,5 +137,13 @@ class CategorieProduit
     {
         $this->icone = $icone;
     }
+
+    /**
+     * @return bool
+     */
+    public function hasProducts()
+    {
+        return !$this->produits->isEmpty();
+    }
 }
 

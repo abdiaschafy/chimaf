@@ -10,6 +10,9 @@ body{
 .text-bold{
     font-weight: bold;
 }
+.margin-top-5 {
+    margin-top: 5px;
+}
 .margin-bottom-20 {
     margin-bottom: 20px;
 }
@@ -158,4 +161,14 @@ input[type="text"], input[type="password"], textarea, textarea.form-control {
 
 .table > tbody > tr > .thick-line {
     border-top: 2px solid;
+}
+.chimaf-thumbnail {
+    border-radius: 2px;
+    box-shadow: 0 2px 2px 0 rgba(0,0,255, 0.5), 0 0 0 1px rgba(0,0,255,0.08);
+    box-sizing: border-box;
+    opacity: 0.8;
+}
+.chimaf-h3 {
+    font-size: 12px;
+    font-weight: bold;
 }

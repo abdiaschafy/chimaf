@@ -18,7 +18,7 @@
         {{ form_start(form, {'action': path('cart_add', {'id': form.vars.value.id}), 'method': 'POST'}) }}
             <div class="col-lg-12">
                 <h1 class="text-left text-bold">
-                    Achat des produits de type: {{ form.vars.value.nom }}
+                    Produits de la catégorie: {{ form.vars.value.nom }}
                     <span style="display: none">{{ form_widget(form.nom) }}</span>
                 </h1>
                 <hr>
@@ -37,31 +37,28 @@
 
                     {% for produit in form.produits %}
 
-                        <div class="col-sm-6 col-md-4">
-                            <div class="thumbnail">
+                        <div class="col-sm-4 col-md-2"  title="{{ produit.vars.value.designation }}">
+                            <div class="thumbnail chimaf-thumbnail">
                                 <div class="row">
-                                    <img src="..." alt="...">
-                                    <div class="caption">
-                                        <h3 class="margin-left-10 text-info text-left">{{ produit.vars.value.designation }}</h3>
-                                        <p class="text-justify margin-left-10 margin-right-10">
-                                            Le Lorem Ipsum est simplement du faux texte employé dans la
-                                            composition et la mise en page avant impression.
-                                            Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500,
-                                            quand un peintre anonyme assembla ensemble des morceaux de texte pour réaliser un
-                                            livre spécimen de polices de texte. Il n'a pas fait que survivre cinq siècles,
-                                            mais s'est aussi adapté à la
-                                        </p>
+                                    <div class="col-md-12 caption">
+                                        <h3 class="chimaf-h3">
+                                            {{ produit.vars.value.designation|truncate(15, true)|raw  }}
+                                        </h3>
+                                        <span class="col-md-12 text-bold text-color-black">
+                                            {{ produit.vars.value.prixUnitaire }} FCFA
+                                        </span>
+                                        <span style="display: none">{{ form_widget(produit.prixUnitaire) }}</span>
                                         <p><span style="display: none">{{ form_widget(produit.designation) }}</span></p>
                                     </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-md-3 text-bold text-color-black">
-                                        {{ produit.vars.value.prixUnitaire }} FCFA
-                                        <span style="display: none">{{ form_widget(produit.prixUnitaire) }}</span>
-                                    </div>
-                                    <div class="col-md-3 pull-right margin-right-10">
-                                        {{ form_row(produit.quantiteAchetee) }}
+                                    <div class="col-md-12">
+                                        <div class="row padding-5 text-primary">
+                                            <div class="col-md-4 margin-top-5">
+                                                {{ form_label(produit.quantiteAchetee) }}
+                                            </div>
+                                            <div class="col-md-8">
+                                                {{ form_widget(produit.quantiteAchetee) }}
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -8,17 +8,28 @@
 {% block page_content %}
 
     <div class="row">
-        <div class="col-lg-12">
-            <p>
-                {% for categorie in  categories %}
-                    <a href="{{ path('produit_categorie', {'id': categorie.id}) }}" class="btn btn-sq-lg btn-primary margin-bottom-10">
-                        <i class="fa {{ categorie.icone }} fa-5x"></i><br/><br/><br/>
-                        {{ categorie.nom }}
-                    </a>
-                {% endfor %}
-
-            </p>
+        <div class="col-sm-12 col-md-12">
+            <h1 class="text-left">Nos produits par catégories</h1>
+            <hr>
         </div>
+        {% for categorie in  categories %}
+            {% if categorie.hasProducts %}
+                <div class="col-sm-4 col-md-2">
+                    <div class="thumbnail chimaf-thumbnail">
+                        <img src="..." alt="...">
+                        <div class="caption">
+                            <h3 class="chimaf-h3">{{ categorie.nom }}</h3>
+                            <p>...</p>
+                            <p><a
+                                    href="{{ path('produit_categorie', {'id': categorie.id}) }}"
+                                    class="btn btn-primary" role="button">
+                                    <i class="fa fa-eye"></i> Détails
+                                </a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
 
 {% endblock  %}
