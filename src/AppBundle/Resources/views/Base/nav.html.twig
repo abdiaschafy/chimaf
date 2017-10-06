@@ -24,19 +24,19 @@
                 <li>
                     <a href="{{ path('cart_list') }}" class="text-color-white">
                         <i class="fa fa-shopping-cart"></i> Votre panier
-                        {% if app.session.get('cart')|length > 0 %}
-                            <span class="badge" style="background: red;">{{ app.session.get('cart')|length }}</span>
+                        {% if app.session.get('cart') is not null  %}
+                            <span class="badge" style="background: red;">{{ app.session.get('cart').produits|length }}</span>
                         {% endif %}
                     </a>
                 </li>
                 {% if is_granted("IS_AUTHENTICATED_FULLY") %}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle text-color-white" data-toggle="dropdown">
-                            <i class="fa {{ is_granted('ROLE_ADMIN') ? 'fa-user-secret text-success' : 'fa-user' }}"></i>
+                            <i class="fa {{ is_granted('ROLE_ADMIN') ? 'fa-user-secret text-default' : 'fa-user' }}"></i>
                             <span class="text-bold">&nbsp;Bonjour,</span>
-                            <span class="text-color-black text-bold">{{ app.user.firstname }}</span>
+                            <span>{{ app.user.firstname }}:</span>
                             {% if is_granted('ROLE_ADMIN') %}
-                                <span class="text-primary text-bold"><i>:&nbsp;{{ app.user.getRole() }}</i></span>
+                                <span class="text-danger text-bold"><i>&nbsp;{{ app.user.getRole() }}</i></span>
                             {% endif %}
                             <span class="glyphicon glyphicon-chevron-down"></span>
                         </a>
@@ -51,7 +51,7 @@
                                         </div>
                                         <div class="col-lg-8">
                                             <p class="text-left text-primary"><strong>{{ app.user.firstname~' '~app.user.lastname }}</strong></p>
-                                            <p class="text-left small">{{ app.user.email }}</p>
+                                            <p class="text-color-black small">{{ app.user.email }}</p>
                                             {% if is_granted('ROLE_ADMIN') %}
                                                 <p class="text-left">
                                                     <a href="{{ path('user_list') }}"

@@ -16,71 +16,117 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><strong>Récapitulatif de la commande # 12345</strong></h3>
-                </div>
-                <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table table-condensed">
-                            <thead>
+            {{ form_start(cartForm, {'action': path('facture_create'), 'method': 'POST'}) }}
+                <table id="cart" class="table table-hover table-condensed">
+
+                    <thead>
+                    <tr>
+                        <th style="width:40%">Product</th>
+                        <th style="width:20%"   class="text-center">Price</th>
+                        <th style="width:8%"  class="text-center">Quantity</th>
+                        <th style="width:22%" class="text-center">Subtotal</th>
+                        <th style="width:10%"></th>
+                    </tr>
+                    </thead>
+
+                    {% set sommeTotale = 0 %}
+
+                    {% if app.session.get('cart') is not null %}
+
+                        <tbody>
+
+                        {% for produit in cartForm.produits %}
+
+                            {% set sousTotal = produit.vars.value.prixUnitaire * produit.vars.value.quantiteAchetee %}
+                            {% set sommeTotale = sommeTotale + sousTotal %}
+
                             <tr>
-                                <td><strong>Produit</strong></td>
-                                <td class="text-center"><strong>Prix</strong></td>
-                                <td class="text-center"><strong>Quantité</strong></td>
-                                <td class="text-right"><strong>Totals</strong></td>
+                                <td data-th="Product">
+                                    <div class="row">
+                                        <div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive"/></div>
+                                        <div class="col-sm-10">
+                                            <h6 class="text-left title-text">
+                                                {{ produit.vars.value.designation }}
+                                                <span style="display: none">{{ form_widget(produit.designation) }}</span>
+                                                <span style="display: none">{{ form_widget(produit.id) }}</span>
+                                            </h6>
+                                            <p class="text-justify">Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td data-th="Price"  class="text-center">
+                                    {{ produit.vars.value.prixUnitaire }} FCFA
+                                    <span style="display: none">{{ form_widget(produit.prixUnitaire) }}</span>
+                                </td>
+                                <td data-th="Quantity">
+                                    {{ form_widget(produit.quantiteAchetee) }}
+                                    <span style="display: none">{{ form_widget(produit.quantiteStock) }}</span>
+                                </td>
+                                <td data-th="Subtotal" class="text-center">
+                                    {{ sousTotal }} FCFA
+                                    <span style="display: none">
+                                        {{ form_widget(produit.prixTotal, {'value' : sousTotal }) }}
+                                    </span>
+                                </td>
+                                <td class="actions" data-th="">
+                                    <a href="{{ path('cart_produit_delete', {'id': produit.vars.value.id }) }}"
+                                        class="btn btn-danger btn-sm"
+                                       title="Supprimer l'article: {{ produit.vars.value.designation }}"
+                                    >
+                                        <i class="fa fa-trash-o"></i>
+                                    </a>
+                                </td>
                             </tr>
-                            </thead>
-                            <tbody>
-                            <!-- foreach ($order->lineItems as $line) or some such thing here -->
-                            <tr>
-                                <td>BS-200</td>
-                                <td class="text-center">1 520 FCFA</td>
-                                <td class="text-center">1</td>
-                                <td class="text-right">1 520 FCFA</td>
-                            </tr>
-                            <tr>
-                                <td>BS-400</td>
-                                <td class="text-center">17 000 FCFA</td>
-                                <td class="text-center">3</td>
-                                <td class="text-right">51 000 FCFA</td>
-                            </tr>
-                            <tr>
-                                <td>BS-1000</td>
-                                <td class="text-center">1 250 FCFA</td>
-                                <td class="text-center">1</td>
-                                <td class="text-right">1 250 FCFA</td>
-                            </tr>
-                            <tr>
-                                <td class="thick-line"></td>
-                                <td class="thick-line"></td>
-                                <td class="thick-line text-center"><strong>Sous-total</strong></td>
-                                <td class="thick-line text-right">53 770 FCFA</td>
-                            </tr>
-                            <tr>
-                                <td class="no-line"></td>
-                                <td class="no-line"></td>
-                                <td class="no-line text-center"><strong>Frais de livraison</strong></td>
-                                <td class="no-line text-right">2000 FCFA</td>
-                            </tr>
-                            <tr>
-                                <td class="no-line"></td>
-                                <td class="no-line"></td>
-                                <td class="no-line text-center"><strong>TVA (19,5%)</strong></td>
-                                <td class="no-line text-right">10 875 FCFA</td>
-                            </tr>
-                            <tr>
-                                <td class="no-line"></td>
-                                <td class="no-line"></td>
-                                <td class="no-line text-center"><strong>Total</strong></td>
-                                <td class="no-line text-right">66 645 FCFA</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <button class="btn btn-info pull-right">Commander</button>
-            </div>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    {% endif %}
+
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-right">
+                                <i>TVA : {{ tva }}%</i>
+                                <span style="display: none">
+                                    {{ form_widget(cartForm.tva, {'value' : tva }) }}
+                                </span>
+                            </td>
+                            <td class="text-center text-warning">
+                                <strong>{{ (tva * sommeTotale) / 100 }} FCFA</strong>
+                            </td><td></td>
+                        </tr>
+                        <tr>
+                            <td class="pull-left">
+                                <a href="{{ path('categorie_all') }}" class="btn btn-warning">
+                                    <i class="fa fa-angle-left"></i> Continuez vos achats
+                                </a>
+                            </td>
+                            <td colspan="2" class="text-right">
+                                <i>TOTAL</i>
+                            </td>
+                            <td class="hidden-xs text-center">
+                                <strong> {{ ((tva * sommeTotale) / 100) + sommeTotale }} FCFA</strong>
+                                <span style="display: none">
+                                    {{ form_widget(cartForm.totalTTC, {'value' : (((tva * sommeTotale) / 100) + sommeTotale) }) }}
+                                </span>
+                                <span style="display: none">
+                                    {{ form_widget(cartForm.totalHT, {'value' : sommeTotale }) }}
+                                </span>
+                            </td>
+                            <td>
+                                <button type="submit" class="btn btn-success btn-block">
+                                    Commandez <i class="fa fa-angle-right"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tfoot>
+
+                </table>
+
+            {{ form_widget(cartForm._token) }}
+            {{ form_end(cartForm, {'render_rest': false }) }}
+
         </div>
     </div>
 {% endblock  %}

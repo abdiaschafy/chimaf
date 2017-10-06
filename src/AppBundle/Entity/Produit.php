@@ -4,7 +4,6 @@ namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Thenbsp\CartBundle\Core\EntityInterface;
 
 /**
  * Produit
@@ -70,6 +69,11 @@ class Produit
      */
     private $facturesDuProduit;
 
+    /**
+     * @var int
+     */
+    private $prixTotal;
+
 
     public function __construct(
         CategorieProduit $categorie = null, 
@@ -91,6 +95,47 @@ class Produit
         
         $this->facturesDuProduit = new ArrayCollection();
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->designation,
+            $this->quantiteAchetee,
+            $this->prixUnitaire,
+            $this->quantiteStock,
+            $this->prixTotal,
+        ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unserialize($serialized)
+    {
+        $data = unserialize($serialized);
+
+        list(
+            $this->id,
+            $this->designation,
+            $this->quantiteAchetee,
+            $this->prixUnitaire,
+            $this->quantiteStock,
+            $this->prixTotal,
+            ) = $data;
+    }
+
+    /**
+     * @param int $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+    
     /**
      * Get id
      *
@@ -208,6 +253,7 @@ class Produit
      */
     public function setQuantiteAchetee($quantiteAchetee)
     {
+        $this->setPrixTotal($quantiteAchetee * $this->getPrixUnitaire());
         $this->quantiteAchetee = $quantiteAchetee;
     }
 
@@ -243,41 +289,20 @@ class Produit
         $this->facturesDuProduit = $facturesDuProduit;
     }
 
-//    /**
-//     * String representation of object
-//     * @link http://php.net/manual/en/serializable.serialize.php
-//     * @return string the string representation of the object or null
-//     * @since 5.1.0
-//     */
-//    public function serialize()
-//    {
-//        return serialize(
-//            [
-//                $this->id,
-//                $this->designation,
-//                $this->quantiteAchetee,
-//            ]
-//        );
-//    }
-//
-//    /**
-//     * Constructs the object
-//     * @link http://php.net/manual/en/serializable.unserialize.php
-//     * @param string $serialized <p>
-//     * The string representation of the object.
-//     * </p>
-//     * @return void
-//     * @since 5.1.0
-//     */
-//    public function unserialize($serialized)
-//    {
-//        $data = unserialize($serialized);
-//        list(
-//            $this->id,
-//            $this->designation,
-//            $this->quantiteAchetee,
-//            ) = $data;
-//
-//    }
+    /**
+     * @return int
+     */
+    public function getPrixTotal()
+    {
+        return $this->prixTotal;
+    }
+
+    /**
+     * @param int $prixTotal
+     */
+    public function setPrixTotal($prixTotal)
+    {
+        $this->prixTotal = $prixTotal;
+    }
 }
 
