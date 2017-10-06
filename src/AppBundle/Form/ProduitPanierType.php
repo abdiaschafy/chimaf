@@ -18,6 +18,12 @@ class ProduitPanierType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('id', IntegerType::class, array(
+                'required' => false,
+                'label' => false,
+                'label_attr' => array('class' => 'text-default'),
+                'attr' => array('class' => 'form-control', 'autofocus' => 'autofocus')
+            ))
             ->add('designation', TextType::class, array(
                 'required' => false,
                 'label' => false,
@@ -30,7 +36,19 @@ class ProduitPanierType extends AbstractType
                 'label_attr' => array('class' => 'text-default'),
                 'attr' => array('class' => 'form-control', 'min' => 1)
             ))
+            ->add('quantiteStock', IntegerType::class, array(
+                'required' => false,
+                'label' => 'Quantité',
+                'label_attr' => array('class' => 'text-default'),
+                'attr' => array('class' => 'form-control', 'min' => 1)
+            ))
             ->add('prixUnitaire', IntegerType::class, array(
+                'required' => false,
+                'label' => false,
+                'label_attr' => array('class' => 'text-default'),
+                'attr' => array('class' => 'form-control', 'readonly' => 'readonly')
+            ))
+            ->add('prixTotal', IntegerType::class, array(
                 'required' => false,
                 'label' => false,
                 'label_attr' => array('class' => 'text-default'),

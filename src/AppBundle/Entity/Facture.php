@@ -13,6 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Facture
 {
+    const CHIMAF = "CHIMAF";
     /**
      * @var int
      *
@@ -42,9 +43,32 @@ class Facture
      */
     private $produitsDeLaFacture;
 
-    public function __construct()
+    /**
+     * @var int
+     * @ORM\Column(name="total_ttc", type="integer", nullable=false)
+     */
+    private $totalTtc;
+
+    /**
+     * @var int
+     * @ORM\Column(name="total_ht", type="integer", nullable=false)
+     */
+    private $totalHt;
+
+    /**
+     * @var int
+     * @ORM\Column(name="tva", type="integer", nullable=false)
+     */
+    private $tva;
+
+    public function __construct($totalTtc, $totalHt, $tva)
     {
+        $this->totalTtc = $totalTtc;
+        $this->totalHt = $totalHt;
+        $this->tva = $tva;
         $this->produitsDeLaFacture = new ArrayCollection();
+        $this->dateFacture = new \DateTime();
+        $this->numero = 'CH'.strtoupper(substr(md5(uniqid(self::CHIMAF, true)),0,15));
     }
     /**
      * Get id
@@ -118,6 +142,54 @@ class Facture
     public function setProduitsDeLaFacture(ArrayCollection $produitsDeLaFacture)
     {
         $this->produitsDeLaFacture = $produitsDeLaFacture;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalTtc()
+    {
+        return $this->totalTtc;
+    }
+
+    /**
+     * @param int $total
+     */
+    public function setTotalTtc($total)
+    {
+        $this->totalTtc = $total;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalHt()
+    {
+        return $this->totalHt;
+    }
+
+    /**
+     * @param int $totalHt
+     */
+    public function setTotalHt($totalHt)
+    {
+        $this->totalHt = $totalHt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTva()
+    {
+        return $this->tva;
+    }
+
+    /**
+     * @param int $tva
+     */
+    public function setTva($tva)
+    {
+        $this->tva = $tva;
     }
 }
 

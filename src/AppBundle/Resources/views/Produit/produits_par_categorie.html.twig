@@ -17,12 +17,6 @@
         </div>
 
         <div class="row">
-            <li>
-                {% for prod in app.session.get('cart') %}
-                    id = {{ prod.id }}; qte = {{ prod.quantiteAchetee }}<br>
-                {% endfor %}
-            </li>
-
             <div class="col-lg-12">
                 <div class="row">
                     <div class="col-md-2 margin-bottom-10">
@@ -50,7 +44,8 @@
                                             {{ produit.vars.value.prixUnitaire }} FCFA
                                         </span>
                                         <span style="display: none">{{ form_widget(produit.prixUnitaire) }}</span>
-                                        <p><span style="display: none">{{ form_widget(produit.designation) }}</span></p>
+                                        <span style="display: none">{{ form_widget(produit.designation) }}</span>
+                                        <span style="display: none">{{ form_widget(produit.id) }}</span>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="row padding-5 text-primary">
@@ -59,6 +54,7 @@
                                             </div>
                                             <div class="col-md-8">
                                                 {{ form_widget(produit.quantiteAchetee) }}
+                                                <span style="display: none">{{ form_widget(produit.quantiteStock) }}</span>
                                             </div>
                                         </div>
                                     </div>

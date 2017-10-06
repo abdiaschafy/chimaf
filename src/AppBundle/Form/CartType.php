@@ -1,17 +1,13 @@
 <?php
 namespace AppBundle\Form;
 
-use AppBundle\Entity\Produit;
-use AppBundle\Repository\CategorieProduitRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class CategorieType extends AbstractType
+class CartType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -21,12 +17,17 @@ class CategorieType extends AbstractType
         $builder
             ->add('produits', CollectionType::class, array(
                 'label' => false,
-                'entry_type' => ProduitPanierType::class
+                'entry_type' => ProduitPanierType::class,
+                'data' => $options['produits']
             ))
-            ->add('nom', TextType::class, array(
-                'label' => 'Désignation',
-                'label_attr' => array('class' => 'text-default'),
-                'attr' => array('class' => 'form-control')
+            ->add('tva', IntegerType::class, array(
+                'label' => false,
+            ))
+            ->add('totalTTC', IntegerType::class, array(
+                'label' => false
+            ))
+            ->add('totalHT', IntegerType::class, array(
+                'label' => false
             ));
     }
     
@@ -36,7 +37,8 @@ class CategorieType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\CategorieProduit'
+            'data_class' => 'AppBundle\Model\UserCart',
+            'produits' => null
         ));
     }
 
@@ -45,7 +47,7 @@ class CategorieType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_form_produit';
+        return 'cart_form_produit';
     }
 
 

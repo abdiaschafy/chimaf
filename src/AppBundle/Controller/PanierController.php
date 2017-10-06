@@ -4,6 +4,9 @@ namespace AppBundle\Controller;
 use AppBundle\Datatables\ProduitDatatable;
 use AppBundle\Entity\CategorieProduit;
 use AppBundle\Entity\Produit;
+use AppBundle\Form\CartType;
+use AppBundle\Form\CategorieType;
+use AppBundle\Model\UserCart;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sg\DatatablesBundle\Datatable\DatatableInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -31,7 +34,14 @@ class PanierController extends Controller
      */
     public function indexAction(Request $request)
     {
-       return $this->render('@App/Panier/panier.html.twig');
+        $panier = $request->getSession()->get('cart') ?: new UserCart();
+
+        $form = $this->createForm(CartType::class, null, array('produits' => $panier->getProduits()));
+        $form->handleRequest($request);
+
+        return $this->render('@App/Panier/panier.html.twig', array(
+            'cartForm' => $form->createView(),
+        ));
     }
 
     /**
@@ -43,91 +53,53 @@ class PanierController extends Controller
      * @param CategorieProduit $categorieProduit
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function newAction(Request $request, CategorieProduit $categorieProduit)
+    public function addToCartAction(Request $request, CategorieProduit $categorieProduit)
     {
-        $form = $this->createForm('AppBundle\Form\CategorieType', $categorieProduit);
+        $form = $this->createForm(CategorieType::class, $categorieProduit);
         $form->handleRequest($request);
         $categorieData = $form->getData();
 
-        $cart = new ArrayCollection();
-
-        if ($request->getSession()->has('cart')) {
-            foreach ($request->getSession()->get('cart') as $cartProd) {
-                $cart->add($cartProd);
-            }
-        }
-
+        $panier = $request->getSession()->get('cart') ?: new UserCart();
         foreach ($categorieData->getProduits() as $produit) {
-            foreach ($cart as $cartProd) {
-                if ($cartProd->getId() === $produit->getId()) {
-                    $produit->setQuantiteAchetee($cartProd->getQuantiteAchetee() + $produit->getQuantiteAchetee());
-                    $cart->removeElement($cartProd);
+            if ($request->getSession()->has('cart')) {
+                foreach ($panier->getProduits() as $cartProd) {
+                    if ($cartProd->getId() === $produit->getId()) {
+                        $produit->setQuantiteAchetee($cartProd->getQuantiteAchetee() + $produit->getQuantiteAchetee());
+                        $panier->removeProduit($cartProd);
+                    }
                 }
             }
             if ($produit->getQuantiteAchetee() !== null && $produit->getQuantiteAchetee() !== 0)
-                $cart->add($produit);
+                $panier->addProduit($produit);
         }
-        $request->getSession()->set('cart', $cart);
-
+        $request->getSession()->set('cart', $panier);
+        $this->addFlash('success', "Vos produits ont été ajoutés au panier");
         return $this->redirectToRoute('produit_categorie', array('id' => $categorieProduit->getId()));
     }
 
     /**
-     * Finds and displays a produit entity.
+     * Deletes a produit form cart.
      *
-     * @Route("/{id}", name="produit_show", options = {"expose" = true})
+     * @Route("/delete/{id}", name="cart_produit_delete", options = {"expose" = true})
      * @Method("GET")
      * @param Produit $produit
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function showAction(Produit $produit)
-    {
-        return $this->render('@App/Produit/show.html.twig', array(
-            'produit' => $produit
-        ));
-    }
-
-    /**
-     * Displays a form to edit an existing produit entity.
-     *
-     * @Route("/edit/{id}", name="produit_edit", options = {"expose" = true})
-     * @Method({"GET", "POST"})
      * @param Request $request
-     * @param Produit $produit
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     */
-    public function editAction(Request $request, Produit $produit)
-    {
-        $editForm = $this->createForm('AppBundle\Form\ProduitType', $produit);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-            $this->addFlash('success', 'Le produit '.$produit->getDesignation().' a été modifié avec succès !');
-            return $this->redirectToRoute('produit_list');
-        }
-
-        return $this->render('@App/Produit/new.html.twig', array(
-            'produit' => $produit,
-            'form' => $editForm->createView()
-        ));
-    }
-
-    /**
-     * Deletes a produit entity.
-     *
-     * @Route("/delete/{id}", name="produit_delete", options = {"expose" = true})
-     * @Method("GET")
-     * @param Produit $produit
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Produit $produit)
+    public function deleteAction(Request $request, Produit $produit)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($produit);
-        $em->flush();
+        try {
+            $cart = $request->getSession()->get('cart');
+            foreach ($cart->getProduits() as $cartProduit) {
+                if ($produit->getId() === $cartProduit->getId()) {
+                    $cart->removeProduit($cartProduit);
+                }
+            }
+            $this->addFlash('success', "Le produit #".$produit->getDesignation()."# a été supprimé du panier");
+        } catch (\Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+        }
 
-        $this->addFlash('success', 'Le produit '.$produit->getDesignation().' a été supprimé avec succès !');
-        return $this->redirectToRoute('produit_list');
+        return $this->redirectToRoute('cart_list');
     }
 }

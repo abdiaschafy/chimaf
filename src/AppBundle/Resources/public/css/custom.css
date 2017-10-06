@@ -73,7 +73,7 @@ body{
     margin-top: 5px;
     border-radius: 0;
     border: none;
-    background-color: #f8f8f8;
+    background-color: #EEEEEE;
 }
 .navbar-login
 {
@@ -165,21 +165,6 @@ input[type="text"], input[type="password"], textarea, textarea.form-control {
     color: #888;
 }
 
-.invoice-title h2, .invoice-title h3 {
-    display: inline-block;
-}
-
-.table > tbody > tr > .no-line {
-    border-top: none;
-}
-
-.table > thead > tr > .no-line {
-    border-bottom: none;
-}
-
-.table > tbody > tr > .thick-line {
-    border-top: 2px solid;
-}
 .chimaf-thumbnail {
     box-shadow: 0 2px 2px 0 rgba(0,0,255, 0.5), 0 0 0 1px rgba(0,0,255,0.08);
     box-sizing: border-box;
@@ -193,4 +178,44 @@ input[type="text"], input[type="password"], textarea, textarea.form-control {
 .chimaf-h3 {
     font-size: 12px;
     font-weight: bold;
+}
+
+.navbar-fixed-top, .navbar-fixed-bottom {
+    position: absolute;
+}
+
+/** PANIER **/
+.table>tbody>tr>td, .table>tfoot>tr>td{
+    vertical-align: middle;
+}
+@media screen and (max-width: 600px) {
+    table#cart tbody td .form-control{
+        width:20%;
+        display: inline !important;
+    }
+    .actions .btn{
+        width:36%;
+        margin:1.5em 0;
+    }
+
+    .actions .btn-info{
+        float:left;
+    }
+    .actions .btn-danger{
+        float:right;
+    }
+
+    table#cart thead { display: none; }
+    table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
+    table#cart tbody tr td:first-child { background: #333; color: #fff; }
+    table#cart tbody td:before {
+        content: attr(data-th); font-weight: bold;
+        display: inline-block; width: 8rem;
+    }
+
+
+
+    table#cart tfoot td{display:block; }
+    table#cart tfoot td .btn{display:block;}
+
 }

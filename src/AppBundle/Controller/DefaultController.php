@@ -15,7 +15,6 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $request->getSession()->clear();
         return $this->render('@App/Home/index.html.twig');
     }
 }
