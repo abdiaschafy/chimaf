@@ -45,19 +45,19 @@ class Facture
 
     /**
      * @var int
-     * @ORM\Column(name="total_ttc", type="integer", nullable=false)
+     * @ORM\Column(name="total_ttc", type="decimal", nullable=false, precision=19, scale=2)
      */
     private $totalTtc;
 
     /**
      * @var int
-     * @ORM\Column(name="total_ht", type="integer", nullable=false)
+     * @ORM\Column(name="total_ht", type="decimal", nullable=false, precision=19, scale=2)
      */
     private $totalHt;
 
     /**
      * @var int
-     * @ORM\Column(name="tva", type="integer", nullable=false)
+     * @ORM\Column(name="tva", type="decimal", nullable=false, precision=4, scale=1)
      */
     private $tva;
 

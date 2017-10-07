@@ -2,22 +2,22 @@
 {% extends "@App/Base/base.html.twig" %}
 
 {% block title %}
-    {{ parent() ~ " " ~ 'Liste des factures' }}
+    {{ parent() ~ " " ~ 'Liste des produits vendus' }}
 {% endblock title %}
 
 {% block page_content %}
 
     <div class="row">
         <h1 class="text-left title-text margin-left-10">
-            Liste des factures
+            Liste des produits vendus
         </h1>
         <hr>
     </div>
     <div class="row">
         <div class="col-md-2 margin-bottom-10">
-            <a href="{{ path('invoice_details') }}" class="btn btn-default pull-left">
+            <a href="{{ path('invoice_list') }}" class="btn btn-default pull-left">
                 <i class="fa fa-chevron-circle-left"></i>
-                Détails des factures
+                Toutes les factures
             </a>
         </div>
         <div class="col-md-12">

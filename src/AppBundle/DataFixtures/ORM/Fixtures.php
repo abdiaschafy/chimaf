@@ -16,27 +16,40 @@ class Fixtures extends Fixture
          *  ROLES UTILISATEUR DE L'APPLICATION
          */
         $grpUser = new Group('Utilisateur', ['ROLE_USER'], 'ROLE_USER');
-        $grpAdmin = new Group('Administrateur', ['ROLE_ADMIN'], 'ROLE_ADMIN');
+        $grpAdmin = new Group('Administrateur', ['ROLE_ADMIN', 'ROLE_STORE_KEEPER', 'ROLE_USER'], 'ROLE_ADMIN');
         $grpComptable = new Group('Comptable', ['ROLE_ACCOUNTANT'], 'ROLE_ACCOUNTANT');
+        $grpMagasinier = new Group('Gestionnaire de stock', ['ROLE_STORE_KEEPER'], 'ROLE_STORE_KEEPER');
 
         $manager->persist($grpUser);
         $manager->persist($grpAdmin);
         $manager->persist($grpComptable);
+        $manager->persist($grpMagasinier);
         $manager->flush();
 
         /**
-         * ADMINISTRATEUR DE L'APPLICATION
+         * UTILISATEURS PRINCIPAUX DE L'APPLICATION
          */
+
         $admin = new User();
         $admin->setPassword($this->generatePassWord($admin));
         $admin->setEmail('admin@yopmail.com');
         $admin->setEnabled(true);
         $admin->addGroup($grpAdmin);
-        $admin->setLastName('Notong Lontchi');
-        $admin->setFirstName('Gabriel');
+        $admin->setLastName('Chafang Lontchi');
+        $admin->setFirstName('Abdias');
         $admin->setLanguage('fr');
         $manager->persist($admin);
-        $manager->flush();
+
+        $comptable = new User();
+        $comptable->setPassword($this->generatePassWord($comptable));
+        $comptable->setEmail('compta@yopmail.com');
+        $comptable->setEnabled(true);
+        $comptable->addGroup($grpComptable);
+        $comptable->setLastName('Kenne Tsapi');
+        $comptable->setFirstName('Lucas');
+        $comptable->setLanguage('fr');
+        $manager->persist($comptable);
+
         $manager->flush();
 
         /**
@@ -47,7 +60,7 @@ class Fixtures extends Fixture
         $jeu = new CategorieProduit('JEU', 'fa-lightbulb-o');
         $manager->persist($jeu);
         $tube = new CategorieProduit('TUBE', 'fa-themeisle');
-        $manager->persist($tube);
+        $manager->persist($comptable);
         $metaux = new CategorieProduit('METAUX', 'fa-sun-o');
         $manager->persist($metaux);
         $vannes = new CategorieProduit('VANNES', 'fa-sun-o');

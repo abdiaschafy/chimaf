@@ -36,12 +36,7 @@ class UserController extends Controller
     public function indexAction(Request $request)
     {
         $isAjax = $request->isXmlHttpRequest();
-
-        // Get your Datatable ...
-        //$datatable = $this->get('app.datatable.post');
-        //$datatable->buildDatatable();
-
-        // or use the DatatableFactory
+        
         /** @var DatatableInterface $datatable */
         $datatable = $this->get('sg_datatables.factory')->create(UserDatatable::class);
         $datatable->buildDatatable();

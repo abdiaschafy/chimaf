@@ -1,59 +1,157 @@
 {% extends '@App/Base/base.html.twig' %}
 
-{% block form_content %}
+{% block page_content %}
 
-    {% set form_title = 'Création d\'un nouveau produit' %}
-
-    {{ parent() }}
-
-    {{ form_start(form) }}
     <div class="row">
-        <div class="form-group text-left">
-            <label class="control-label requiredField" for="email">
-                {{ form_label(form.designation) }}
-            </label>
-            {{ form_widget(form.designation) }}
-            {{ form_errors(form.designation) }}
-        </div>
-
-        <div class="form-group text-left">
-            <label class="control-label requiredField" for="email">
-                {{ form_label(form.numero) }}
-            </label>
-            {{ form_widget(form.numero) }}
-            {{ form_errors(form.numero) }}
-        </div>
-
-        <div class="form-group text-left">
-            <label class="control-label requiredField" for="email">
-                {{ form_label(form.quantiteAlerte) }}
-            </label>
-            {{ form_widget(form.quantiteAlerte) }}
-            {{ form_errors(form.quantiteAlerte) }}
-        </div>
-
-        <div class="form-group text-left">
-            <label class="control-label requiredField" for="email">
-                {{ form_label(form.quantiteStock) }}
-            </label>
-            {{ form_widget(form.quantiteStock) }}
-            {{ form_errors(form.quantiteStock) }}
-        </div>
-
-        <div class="form-group text-left">
-            <label class="control-label requiredField" for="email">
-                {{ form_label(form.categorie) }}
-            </label>
-            {{ form_widget(form.categorie) }}
-            {{ form_errors(form.categorie) }}
-        </div>
-
-        <div class="form-group pull-right">
-            <button type="submit" class="btn btn-success">Enregister</button>
-        </div>
+        <h1 class="text-left title-text margin-left-10">
+            Création d'un nouveau produit
+        </h1>
+        <hr>
     </div>
 
 
-    {{ form_end(form) }}
+    <div class="top-content">
+        <div class="inner-bg">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3 form-box">
+                        <div class="form-top">
+                            <div class="form-top-left">
+                                <h3>Création d'un nouveau produit</h3>
+                                <p>Veuillez entrer les informations de l'utilisateur</p>
+                            </div>
+                            <div class="form-top-right">
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="form-bottom">
+
+                            {{ form_start(form) }}
+
+                                <div class="row">
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.designation) }}
+                                                </label>
+                                                {{ form_widget(form.designation) }}
+                                                {{ form_errors(form.designation) }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.numero) }}
+                                                </label>
+                                                {{ form_widget(form.numero) }}
+                                                {{ form_errors(form.numero) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.quantiteAlerte) }}
+                                                </label>
+                                                {{ form_widget(form.quantiteAlerte) }}
+                                                {{ form_errors(form.quantiteAlerte) }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.quantiteStock) }}
+                                                </label>
+                                                {{ form_widget(form.quantiteStock) }}
+                                                {{ form_errors(form.quantiteStock) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.categorie) }}
+                                                </label>
+                                                {{ form_widget(form.categorie) }}
+                                                {{ form_errors(form.categorie) }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.prixUnitaire) }}
+                                                </label>
+                                                {{ form_widget(form.prixUnitaire) }}
+                                                {{ form_errors(form.prixUnitaire) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group pull-right">
+                                        <button type="submit" class="btn btn-success">Enregister</button>
+                                    </div>
+                                </div>
+
+                            {{ form_end(form) }}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {##}
+
+    {#{{ form_start(form) }}#}
+    {#<div class="row">#}
+        {#<div class="form-group text-left">#}
+            {#<label class="control-label requiredField" for="email">#}
+                {#{{ form_label(form.designation) }}#}
+            {#</label>#}
+            {#{{ form_widget(form.designation) }}#}
+            {#{{ form_errors(form.designation) }}#}
+        {#</div>#}
+
+        {#<div class="form-group text-left">#}
+            {#<label class="control-label requiredField" for="email">#}
+                {#{{ form_label(form.numero) }}#}
+            {#</label>#}
+            {#{{ form_widget(form.numero) }}#}
+            {#{{ form_errors(form.numero) }}#}
+        {#</div>#}
+
+        {#<div class="form-group text-left">#}
+            {#<label class="control-label requiredField" for="email">#}
+                {#{{ form_label(form.quantiteAlerte) }}#}
+            {#</label>#}
+            {#{{ form_widget(form.quantiteAlerte) }}#}
+            {#{{ form_errors(form.quantiteAlerte) }}#}
+        {#</div>#}
+
+        {#<div class="form-group text-left">#}
+            {#<label class="control-label requiredField" for="email">#}
+                {#{{ form_label(form.quantiteStock) }}#}
+            {#</label>#}
+            {#{{ form_widget(form.quantiteStock) }}#}
+            {#{{ form_errors(form.quantiteStock) }}#}
+        {#</div>#}
+
+        {#<div class="form-group text-left">#}
+            {#<label class="control-label requiredField" for="email">#}
+                {#{{ form_label(form.categorie) }}#}
+            {#</label>#}
+            {#{{ form_widget(form.categorie) }}#}
+            {#{{ form_errors(form.categorie) }}#}
+        {#</div>#}
+
+        {#<div class="form-group pull-right">#}
+            {#<button type="submit" class="btn btn-success">Enregister</button>#}
+        {#</div>#}
+    {#</div>#}
+
+
+    {#{{ form_end(form) }}#}
 
 {% endblock %}

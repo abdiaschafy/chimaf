@@ -4,8 +4,9 @@ security:
 
     role_hierarchy:
         ROLE_USER: ROLE_USER
+        ROLE_STORE_KEEPER: ROLE_USER
         ROLE_ACCOUNTANT: ROLE_ACCOUNTANT
-        ROLE_ADMIN: [ROLE_USER]
+        ROLE_ADMIN: [ROLE_STORE_KEEPER, ROLE_ACCOUNTANT]
 
     providers:
         fos_userbundle:

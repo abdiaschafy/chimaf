@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Datatables\FactureDatatable;
 use AppBundle\Datatables\ProduitDatatable;
 use AppBundle\Datatables\ProduitFactureDatatable;
 use AppBundle\Entity\Facture;
@@ -8,6 +9,9 @@ use AppBundle\Entity\Produit;
 use AppBundle\Entity\ProduitFacture;
 use AppBundle\Form\CartType;
 use AppBundle\Model\UserCart;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sg\DatatablesBundle\Datatable\DatatableInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -19,22 +23,49 @@ use Symfony\Component\Serializer\Serializer;
 /**
  * FactureController
  *
- * @Route("bill")
+ * @Route("invoice")
  */
 class FactureController extends Controller
 {
 
     /**
-     * Lists all Post entities.
-     *
+     * @Security("has_role('ROLE_ACCOUNTANT')")
      * @param Request $request
-     *
-     * @Route("/list", name="bill_list")
+     * @Route("/list", name="invoice_list")
      * @Method("GET")
      *
      * @return Response
      */
-    public function indexAction(Request $request)
+    public function billAction(Request $request)
+    {
+        $isAjax = $request->isXmlHttpRequest();
+
+        /** @var DatatableInterface $datatable */
+        $datatable = $this->get('sg_datatables.factory')->create(FactureDatatable::class);
+        $datatable->buildDatatable();
+
+        if ($isAjax) {
+            $responseService = $this->get('sg_datatables.response');
+            $responseService->setDatatable($datatable);
+            $responseService->getDatatableQueryBuilder();
+
+            return $responseService->getResponse();
+        }
+
+        return $this->render('@App/Facture/list.html.twig', array(
+            'datatable' => $datatable,
+        ));
+    }
+
+    /**
+     * @Security("has_role('ROLE_ACCOUNTANT')")
+     * @param Request $request
+     * @Route("/details", name="invoice_details")
+     * @Method("GET")
+     *
+     * @return Response
+     */
+    public function soldProductsAction(Request $request)
     {
         $isAjax = $request->isXmlHttpRequest();
 
@@ -50,22 +81,20 @@ class FactureController extends Controller
             return $responseService->getResponse();
         }
 
-        return $this->render('@App/Facture/list.html.twig', array(
+        return $this->render('@App/Facture/sold_products_list.html.twig', array(
             'datatable' => $datatable,
         ));
     }
     
     /**
-     * Lists all Post entities.
-     *
      * @param Request $request
      *
-     * @Route("/sent", name="facture_create")
+     * @Route("/create", name="facture_create")
      * @Method({"GET", "POST"})
      *
      * @return Response
      */
-    public function billAction(Request $request)
+    public function createBillAction(Request $request)
     {
         $produits = $request->get('cart_form_produit')['produits'];
         $tva = $request->get('cart_form_produit')['tva'];
@@ -92,5 +121,35 @@ class FactureController extends Controller
         }
 
         return $this->redirectToRoute('chimaf_home');
+    }
+
+    /**
+     * @Security("has_role('ROLE_ACCOUNTANT')")
+     * @Route("/generate/proforma/{id}", name="proforma_invoice_generate")
+     * @param Facture $facture
+     * @return Response
+     */
+    public function generateProformaBillAction(Facture $facture)
+    {
+        $produitsDeLaFacture = $facture->getProduitsDeLaFacture();
+
+        $options = new Options();
+        // Pour simplifier l'affichage des images, on autorise dompdf à utiliser
+        // des  url pour les nom de  fichier
+        $options->set('isRemoteEnabled', TRUE);
+        // On crée une instance de dompdf avec  les options définies
+        $dompdf = new Dompdf($options);
+        // On demande à Symfony de générer  le code html  correspondant à
+        // notre template, et on stocke ce code dans une variable
+        $html = $this->renderView(
+            '@App/Facture/invoice_template.html.twig',
+            array('produitsDeLaFacture' => $produitsDeLaFacture, 'facture' => $facture)
+        );
+        // On envoie le code html  à notre instance de dompdf
+        $dompdf->loadHtml($html);
+        // On demande à dompdf de générer le  pdf
+        $dompdf->render();
+        // On renvoie  le flux du fichier pdf dans une  Response pour l'utilisateur
+        return new Response ($dompdf->stream());
     }
 }
