@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use UserBundle\Form\UserRegistrationType;
 
 
 /**
@@ -67,7 +68,7 @@ class UserController extends Controller
      */
     public function showAction(User $user)
     {
-        return $this->render('@User/Group/show.html.twig', array(
+        return $this->render('@User/User/show.html.twig', array(
             'user' => $user
         ));
     }
@@ -76,15 +77,25 @@ class UserController extends Controller
      * @param User $user
      *
      * @Route("/edit/{id}", name = "user_edit", options = {"expose" = true})
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_USER')")
-     *
+     * @param Request $request
+     * @param User $user
      * @return Response
      */
-    public function editAction(User $user)
+    public function editAction(Request $request, User $user)
     {
-        return $this->render('@User/Group/show.html.twig', array(
-            'user' => $user
+        $editForm = $this->createForm(UserRegistrationType::class, $user);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'L\utilisateur  '.$user->getFirstName().' '.$user->getLastName().' a été modifié avec succès !');
+            return $this->redirectToRoute('user_list');
+        }
+        return $this->render('@User/Registration/register.html.twig', array(
+            'form' => $editForm->createView(),
+            'submitUrl' => $this->generateUrl('user_edit', array('id' => $user->getId()))
         ));
     }
 
@@ -141,5 +152,28 @@ class UserController extends Controller
     {
         $this->addFlash('success', $this->container->get('translator')->trans('registration.confirmed', array('username' => $user->getUsername()), 'fos_user_bundle'));
         return $this->redirectToRoute('fos_user_security_login');
+    }
+
+    /**
+     * Deletes a produit entity.
+     *
+     * @Route("/delete/{id}", name="user_delete", options = {"expose" = true})
+     * @Method("GET")
+     * @param User $user
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function deleteAction(User $user)
+    {
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($user);
+            $em->flush();
+
+            $this->addFlash('success', 'L\'utilisateur '.$user->getFullName().' a été supprimé avec succès !');
+        } catch (\Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+        }
+        
+        return $this->redirectToRoute('produit_list');
     }
 }

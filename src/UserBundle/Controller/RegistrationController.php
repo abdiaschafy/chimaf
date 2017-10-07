@@ -103,6 +103,7 @@ class RegistrationController extends BaseController
 
         return $this->render('@User/Registration/register.html.twig', array(
             'form' => $form->createView(),
+            'submitUrl' => $this->generateUrl('fos_user_registration_register')
         ));
     }
 

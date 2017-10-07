@@ -122,7 +122,7 @@ class ProduitController extends Controller
      */
     public function editAction(Request $request, Produit $produit)
     {
-        $editForm = $this->createForm('AppBundle\Form\ProduitType', $produit);
+        $editForm = $this->createForm(ProduitType::class, $produit);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -152,6 +152,6 @@ class ProduitController extends Controller
         $em->flush();
 
         $this->addFlash('success', 'Le produit '.$produit->getDesignation().' a été supprimé avec succès !');
-        return $this->redirectToRoute('produit_list');
+        return $this->redirectToRoute('user_list');
     }
 }
