@@ -25,7 +25,7 @@
                     <a href="{{ path('cart_list') }}" class="text-color-white">
                         <i class="fa fa-shopping-cart"></i> Votre panier
                         {% if app.session.get('cart') is not null  %}
-                            <span class="badge" style="background: red;">{{ app.session.get('cart').produits|length }}</span>
+                            <span class="badge" style="background: orange;">{{ app.session.get('cart').produits|length }}</span>
                         {% endif %}
                     </a>
                 </li>
@@ -58,6 +58,24 @@
                                                        class="btn btn-info btn-block btn-sm">
                                                         <i class="fa fa-cogs"></i>
                                                         Gérer les utilisateurs
+                                                    </a>
+                                                </p>
+                                            {% endif %}
+                                            {% if is_granted('ROLE_STORE_KEEPER') %}
+                                                <p class="text-left">
+                                                    <a href="{{ path('produit_list') }}"
+                                                       class="btn btn-success btn-block btn-sm">
+                                                        <i class="fa fa-list"></i>
+                                                        Gérer les Produits
+                                                    </a>
+                                                </p>
+                                            {% endif %}
+                                            {% if is_granted('ROLE_ACCOUNTANT') %}
+                                                <p class="text-left">
+                                                    <a href="{{ path('invoice_list') }}"
+                                                       class="btn btn-warning btn-block btn-sm">
+                                                        <i class="fa fa-paper-plane-o"></i>
+                                                        Gérer les factures
                                                     </a>
                                                 </p>
                                             {% endif %}

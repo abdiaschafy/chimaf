@@ -5,6 +5,7 @@ use AppBundle\Datatables\ProduitDatatable;
 use AppBundle\Entity\CategorieProduit;
 use AppBundle\Entity\Produit;
 use AppBundle\Form\CategorieType;
+use AppBundle\Form\ProduitType;
 use Sg\DatatablesBundle\Datatable\DatatableInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -78,7 +79,7 @@ class ProduitController extends Controller
     public function newAction(Request $request)
     {
         $produit = new Produit();
-        $form = $this->createForm('AppBundle\Form\ProduitType', $produit);
+        $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

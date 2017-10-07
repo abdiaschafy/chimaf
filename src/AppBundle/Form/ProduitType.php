@@ -38,6 +38,11 @@ class ProduitType extends AbstractType
                 'label_attr' => array('class' => 'text-default'),
                 'attr' => array('class' => 'form-control')
             ))
+            ->add('prixUnitaire', IntegerType::class, array(
+                'label' => 'Prix unitaire',
+                'label_attr' => array('class' => 'text-default'),
+                'attr' => array('class' => 'form-control')
+            ))
             ->add('categorie', EntityType::class, array(
                 'required' => true,
                 'class' => 'AppBundle:CategorieProduit',

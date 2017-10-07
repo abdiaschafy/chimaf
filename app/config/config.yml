@@ -84,3 +84,4 @@ fos_user:
     registration:
         form:
             type: UserBundle\Form\UserRegistrationType
+#Bundle de generation de pdf et d'inmage
