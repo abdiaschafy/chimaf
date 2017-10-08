@@ -15,7 +15,7 @@
                 <li><a href="{{ path('chimaf_home') }}" class="text-color-white"><i class="fa fa-home icon-white"></i> Accueil</a></li>
                 <li class="divider-vertical"></li>
                 <li>
-                    <a href="{{ path('categorie_all') }}" class="text-color-white">
+                    <a href="{{ path('categorie_produit_client_list') }}" class="text-color-white">
                         <i class="fa fa-table"></i> Nos Produits
                     </a>
                 </li>
@@ -67,6 +67,13 @@
                                                        class="btn btn-success btn-block btn-sm">
                                                         <i class="fa fa-list"></i>
                                                         Gérer les Produits
+                                                    </a>
+                                                </p>
+                                                <p class="text-left">
+                                                    <a href="{{ path('categorie_produit_list') }}"
+                                                       class="btn btn-primary btn-block btn-sm">
+                                                        <i class="fa fa-table"></i>
+                                                        Les catégories de produits
                                                     </a>
                                                 </p>
                                             {% endif %}

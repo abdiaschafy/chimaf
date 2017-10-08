@@ -1,8 +1,10 @@
 <?php
 namespace AppBundle\Controller;
 
-use AppBundle\Datatables\ProduitDatatable;
-use AppBundle\Entity\Produit;
+use AppBundle\Datatables\CategorieProduitDatatable;
+use AppBundle\Entity\CategorieProduit;
+use AppBundle\Form\CategorieType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sg\DatatablesBundle\Datatable\DatatableInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -17,40 +19,39 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CategorieController extends Controller
 {
-//    /**
-//     * Lists all Post entities.
-//     *
-//     * @param Request $request
-//     *
-//     * @Route("/list", name="produit_list")
-//     * @Method("GET")
-//     *
-//     * @return Response
-//     */
-//    public function indexAction(Request $request)
-//    {
-//        $isAjax = $request->isXmlHttpRequest();
-//
-//        // or use the DatatableFactory
-//        /** @var DatatableInterface $datatable */
-//        $datatable = $this->get('sg_datatables.factory')->create(ProduitDatatable::class);
-//        $datatable->buildDatatable();
-//
-//        if ($isAjax) {
-//            $responseService = $this->get('sg_datatables.response');
-//            $responseService->setDatatable($datatable);
-//            $responseService->getDatatableQueryBuilder();
-//
-//            return $responseService->getResponse();
-//        }
-//
-//        return $this->render('@App/Produit/list.html.twig', array(
-//            'datatable' => $datatable,
-//        ));
-//    }
+    /**
+     * Lists all category products.
+     * @Security("has_role('ROLE_STORE_KEEPER') or has_role('ROLE_ADMIN')")
+     * @param Request $request
+     * @Route("/list", name="categorie_produit_list")
+     * @Method("GET")
+     *
+     * @return Response
+     */
+    public function indexAction(Request $request)
+    {
+        $isAjax = $request->isXmlHttpRequest();
+
+        // or use the DatatableFactory
+        /** @var DatatableInterface $datatable */
+        $datatable = $this->get('sg_datatables.factory')->create(CategorieProduitDatatable::class);
+        $datatable->buildDatatable();
+
+        if ($isAjax) {
+            $responseService = $this->get('sg_datatables.response');
+            $responseService->setDatatable($datatable);
+            $responseService->getDatatableQueryBuilder();
+
+            return $responseService->getResponse();
+        }
+
+        return $this->render('@App/Categorie/list.html.twig', array(
+            'datatable' => $datatable,
+        ));
+    }
 
     /**
-     * @Route("/all", name="categorie_all", options = {"expose" = true})
+     * @Route("/all", name="categorie_produit_client_list", options = {"expose" = true})
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function categoriesAction()
@@ -63,90 +64,76 @@ class CategorieController extends Controller
 
     }
 
-//    /**
-//     * Creates a new produit entity.
-//     *
-//     * @Route("/new", name="produit_new", options = {"expose" = true})
-//     * @Method({"GET", "POST"})
-//     * @param Request $request
-//     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-//     */
-//    public function newAction(Request $request)
-//    {
-//        $produit = new Produit();
-//        $form = $this->createForm('AppBundle\Form\ProduitType', $produit);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $em = $this->getDoctrine()->getManager();
-//            $em->persist($produit);
-//            $em->flush();
-//            $this->addFlash('success', 'Le produit '.$produit->getDesignation().' a été créé avec succès !');
-//            return $this->redirectToRoute('produit_show', array('id' => $produit->getId()));
-//        }
-//
-//        return $this->render('@App/Produit/new.html.twig', array(
-//            'produit' => $produit,
-//            'form' => $form->createView(),
-//        ));
-//    }
+    /**
+     * @Security("has_role('ROLE_STORE_KEEPER') or has_role('ROLE_ADMIN')")
+     * @Route("/new", name="categorie_produit_new", options = {"expose" = true})
+     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function newAction(Request $request)
+    {
+        $categorie = new CategorieProduit();
+        $form = $this->createForm(CategorieType::class, $categorie);
+        $form->handleRequest($request);
 
-//    /**
-//     * Finds and displays a produit entity.
-//     *
-//     * @Route("/{id}", name="produit_show", options = {"expose" = true})
-//     * @Method("GET")
-//     * @param Produit $produit
-//     * @return \Symfony\Component\HttpFoundation\Response
-//     */
-//    public function showAction(Produit $produit)
-//    {
-//        return $this->render('@App/Produit/show.html.twig', array(
-//            'produit' => $produit
-//        ));
-//    }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($categorie);
+            $em->flush();
+            $this->addFlash('success', 'La '.$categorie->getNom().' a été créé avec succès !');
+            return $this->redirectToRoute('categorie_produit_list');
+        }
 
-//    /**
-//     * Displays a form to edit an existing produit entity.
-//     *
-//     * @Route("/edit/{id}", name="produit_edit", options = {"expose" = true})
-//     * @Method({"GET", "POST"})
-//     * @param Request $request
-//     * @param Produit $produit
-//     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-//     */
-//    public function editAction(Request $request, Produit $produit)
-//    {
-//        $editForm = $this->createForm('AppBundle\Form\ProduitType', $produit);
-//        $editForm->handleRequest($request);
-//
-//        if ($editForm->isSubmitted() && $editForm->isValid()) {
-//            $this->getDoctrine()->getManager()->flush();
-//            $this->addFlash('success', 'Le produit '.$produit->getDesignation().' a été modifié avec succès !');
-//            return $this->redirectToRoute('produit_list');
-//        }
-//
-//        return $this->render('@App/Produit/new.html.twig', array(
-//            'produit' => $produit,
-//            'form' => $editForm->createView()
-//        ));
-//    }
+        return $this->render('@App/Categorie/new.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
 
     /**
-     * Deletes a produit entity.
-     *
-     * @Route("/delete/{id}", name="produit_delete", options = {"expose" = true})
+     * @Security("has_role('ROLE_STORE_KEEPER') or has_role('ROLE_ADMIN')")
+     * @Route("/edit/{id}", name="categorie_produit_edit", options = {"expose" = true})
+     * @Method({"GET", "POST"})
+     * @param Request $request
+     * @param CategorieProduit $categorieProduit
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function editAction(Request $request, CategorieProduit $categorieProduit)
+    {
+        $editForm = $this->createForm(CategorieType::class, $categorieProduit);
+        $editForm->handleRequest($request);
+
+        if ($editForm->isSubmitted() && $editForm->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            $this->addFlash('success', 'La catégorie '.$categorieProduit->getNom().' a été modifié avec succès !');
+            return $this->redirectToRoute('categorie_produit_list');
+        }
+
+        return $this->render('@App/Categorie/new.html.twig', array(
+            'produit' => $categorieProduit,
+            'form' => $editForm->createView()
+        ));
+    }
+
+    /**
+     * @Security("has_role('ROLE_STORE_KEEPER') or has_role('ROLE_ADMIN')")
+     * @Route("/delete/{id}", name="categorie_produit_delete", options = {"expose" = true})
      * @Method("GET")
-     * @param Produit $produit
+     * @param CategorieProduit $categorieProduit
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deleteAction(Produit $produit)
+    public function deleteAction(CategorieProduit $categorieProduit)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($produit);
-        $em->flush();
+        try {
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($categorieProduit);
+            $em->flush();
 
-        $this->addFlash('success', 'Le produit '.$produit->getDesignation().' a été supprimé avec succès !');
-        return $this->redirectToRoute('produit_list');
+            $this->addFlash('success', 'La catégorie '.$categorieProduit->getNom().' a été supprimée avec succès !');
+        } catch (\Exception $e) {
+            $this->addFlash('error', $e->getMessage());
+        }
+
+        return $this->redirectToRoute('categorie_produit_list');
     }
 }
