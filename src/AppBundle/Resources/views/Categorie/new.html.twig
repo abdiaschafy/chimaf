@@ -1,0 +1,60 @@
+{% extends '@App/Base/base.html.twig' %}
+
+{% block page_content %}
+
+    <div class="row">
+        <h1 class="text-left title-text margin-left-10">
+            Création d'une catégorie de produit
+        </h1>
+        <hr>
+    </div>
+
+
+    <div class="top-content">
+        <div class="inner-bg">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3 form-box">
+                        <div class="form-top">
+                            <div class="form-top-left">
+                                <h3>Création d'une nouvelle catégorie</h3>
+                                <p>Veuillez entrer les informations</p>
+                            </div>
+                            <div class="form-top-right">
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="form-bottom">
+
+                            {{ form_start(form) }}
+
+                                <div class="row">
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.nom) }}
+                                                </label>
+                                                {{ form_widget(form.nom) }}
+                                                {{ form_errors(form.nom) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group pull-right">
+                                        <button type="submit" class="btn btn-success">Enregister</button>
+                                    </div>
+                                </div>
+
+                            {{ form_end(form) }}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

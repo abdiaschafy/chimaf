@@ -111,6 +111,10 @@ class FactureController extends Controller
             foreach ($objetProduits as $produit) {
                 $prod = $em->getRepository('AppBundle:Produit')->findOneBy(array('id' => $produit->id));
                 $produitFacture = new ProduitFacture($prod, $facture, $produit->prixUnitaire , $produit->quantiteAchetee);
+                // Mise à jour du stock du produit acheté
+                $prod->setQuantiteStock($prod->getQuantiteStock() - $produit->quantiteAchetee);
+                $em->persist($prod);
+                
                 $em->persist($produitFacture);
             }
             $em->flush();

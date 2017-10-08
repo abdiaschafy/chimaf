@@ -28,22 +28,15 @@ class CategorieProduit
      */
     private $nom;
     /**
-     * @var string
-     *
-     * @ORM\Column(name="icone", type="string", length=30)
-     */
-    private $icone;
-    /**
      * O@var ArrayCollection
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Produit", mappedBy="categorie")
      */
     private $produits;
 
 
-    public function __construct($nom, $icone)
+    public function __construct($nom = null)
     {
         $this->nom = $nom;
-        $this->icone = $icone;
         $this->produits = new ArrayCollection();
     }
     /**
@@ -120,22 +113,6 @@ class CategorieProduit
             $this->produits->removeElement($produit);
         }
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIcone()
-    {
-        return $this->icone;
-    }
-
-    /**
-     * @param string $icone
-     */
-    public function setIcone($icone)
-    {
-        $this->icone = $icone;
     }
 
     /**

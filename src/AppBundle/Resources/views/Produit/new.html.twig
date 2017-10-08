@@ -19,7 +19,7 @@
                         <div class="form-top">
                             <div class="form-top-left">
                                 <h3>Création d'un nouveau produit</h3>
-                                <p>Veuillez entrer les informations de l'utilisateur</p>
+                                <p>Veuillez entrer les informations</p>
                             </div>
                             <div class="form-top-right">
                                 <i class="fa fa-sign-in" aria-hidden="true"></i>
@@ -101,57 +101,4 @@
             </div>
         </div>
     </div>
-
-    {##}
-
-    {#{{ form_start(form) }}#}
-    {#<div class="row">#}
-        {#<div class="form-group text-left">#}
-            {#<label class="control-label requiredField" for="email">#}
-                {#{{ form_label(form.designation) }}#}
-            {#</label>#}
-            {#{{ form_widget(form.designation) }}#}
-            {#{{ form_errors(form.designation) }}#}
-        {#</div>#}
-
-        {#<div class="form-group text-left">#}
-            {#<label class="control-label requiredField" for="email">#}
-                {#{{ form_label(form.numero) }}#}
-            {#</label>#}
-            {#{{ form_widget(form.numero) }}#}
-            {#{{ form_errors(form.numero) }}#}
-        {#</div>#}
-
-        {#<div class="form-group text-left">#}
-            {#<label class="control-label requiredField" for="email">#}
-                {#{{ form_label(form.quantiteAlerte) }}#}
-            {#</label>#}
-            {#{{ form_widget(form.quantiteAlerte) }}#}
-            {#{{ form_errors(form.quantiteAlerte) }}#}
-        {#</div>#}
-
-        {#<div class="form-group text-left">#}
-            {#<label class="control-label requiredField" for="email">#}
-                {#{{ form_label(form.quantiteStock) }}#}
-            {#</label>#}
-            {#{{ form_widget(form.quantiteStock) }}#}
-            {#{{ form_errors(form.quantiteStock) }}#}
-        {#</div>#}
-
-        {#<div class="form-group text-left">#}
-            {#<label class="control-label requiredField" for="email">#}
-                {#{{ form_label(form.categorie) }}#}
-            {#</label>#}
-            {#{{ form_widget(form.categorie) }}#}
-            {#{{ form_errors(form.categorie) }}#}
-        {#</div>#}
-
-        {#<div class="form-group pull-right">#}
-            {#<button type="submit" class="btn btn-success">Enregister</button>#}
-        {#</div>#}
-    {#</div>#}
-
-
-    {#{{ form_end(form) }}#}
-
 {% endblock %}

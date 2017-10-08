@@ -48,6 +48,12 @@ class Produit
     /**
      * @var int
      *
+     * @ORM\Column(name="qte_stock_initial", type="integer")
+     */
+    private $quantiteStockInitial;
+    /**
+     * @var int
+     *
      * @ORM\Column(name="prix_unitaire", type="decimal")
      */
     private $prixUnitaire;
@@ -236,8 +242,27 @@ class Produit
      */
     public function setQuantiteStock($qauntiteStock)
     {
+        if (null === $this->getId()) // on ne renseigne la valeur qu'à l'ajout
+            $this->setQuantiteStockInitial($qauntiteStock);
+
         $this->quantiteStock = $qauntiteStock;
         return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getQuantiteStockInitial()
+    {
+        return $this->quantiteStockInitial;
+    }
+
+    /**
+     * @param int $quantiteStockInitial
+     */
+    public function setQuantiteStockInitial($quantiteStockInitial)
+    {
+        $this->quantiteStockInitial = $quantiteStockInitial;
     }
 
     /**

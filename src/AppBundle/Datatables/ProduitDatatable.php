@@ -38,6 +38,9 @@ class ProduitDatatable extends BaseDatatable
             ->add('quantiteStock', Column::class, array(
                 'title' => 'Quantité en stock',
                 ))
+            ->add('quantiteStockInitial', Column::class, array(
+                'title' => 'Quantité initialement en stock',
+                ))
             ->add('categorie.nom', Column::class, array(
                 'title' => 'Catégorie du produit',
                 ))
