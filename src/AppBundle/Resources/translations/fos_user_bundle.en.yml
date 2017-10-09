@@ -1,105 +1,111 @@
 group:
     edit:
-        submit: 'Update group'
+        submit: 'Mettre à jour le groupe'
     show:
-        name: 'Group name'
+        name: 'Nom du groupe'
     new:
-        submit: 'Create group'
+        submit: 'Créer le groupe'
     flash:
-        updated: 'The group has been updated.'
-        created: 'The group has been created.'
-        deleted: 'The group has been deleted.'
-
+        updated: 'Le groupe a été mis à jour.'
+        created: 'Le groupe a été créé.'
+        deleted: 'Le groupe a été supprimé.'
 security:
     login:
-        username: Username
-        password: Password
-        remember_me: 'Remember me'
-        submit: 'Log in'
-
+        username: 'Nom d''utilisateur'
+        password: 'Mot de passe'
+        remember_me: 'Se souvenir de moi'
+        submit: Connexion
 profile:
     show:
-        username: Username
-        email: Email
+        username: 'Nom d''utilisateur'
+        email: 'Adresse e-mail'
     edit:
-        submit: Update
+        submit: 'Mettre à jour'
     flash:
-        updated: 'The profile has been updated.'
-
+        updated: 'Le profil a été mis à jour.'
 change_password:
-    submit: 'Change password'
+    submit: 'Modifier le mot de passe'
     flash:
-        success: 'The password has been changed.'
-
+        success: 'Le mot de passe a été modifié.'
 registration:
-    check_email: |
-        An email has been sent to %email%. It contains an activation link you must click to activate your account.
-    confirmed: 'Congrats %username%, your account is now activated.'
-    back: 'Back to the originating page.'
-    submit: Register
+    check_email: 'Un e-mail a été envoyé à l''adresse %email%. Il contient un lien d''activation sur lequel il vous faudra cliquer afin d''activer votre compte.'
+    confirmed: 'Félicitations %username%, votre compte est maintenant activé.'
+    back: 'Retour à la page d''origine.'
+    submit: 'Créer un compte'
     flash:
-        user_created: 'The user has been created successfully.'
+        user_created: 'L''utilisateur a été créé avec succès.'
     email:
-        subject: 'Welcome %username%!<br>'
+        subject: 'Bienvenue %username% !<br>'
         message: |
-            Hello %username%!<br><br>
+            Bonjour %username% !<br><br>
 
-            To finish activating your account - please visit <a href='%confirmationUrl%'>Confirm</a><br>
+            Pour valider votre compte utilisateur, merci de vous rendre sur <a href='%confirmationUrl%'>Confirmer</a><br>
 
-            This link can only be used once to validate your account.<br><br>
+            Ce lien ne peut être utilisé qu'une seule fois pour valider votre compte.<br><br>
 
             Login: %login%<br>
             Password: %password%<br><br>
 
-            Regards,<br>
-            the Team.
+            Cordialement,<br>
+            L'équipe
 
 resetting:
     check_email: |
-        An email has been sent. It contains a link you must click to reset your password.
-        Note: You can only request a new password once within %tokenLifetime% hours.
+        Un e-mail a été envoyé. Il contient un lien sur lequel il vous faudra cliquer pour réinitialiser votre mot de passe.
+        Remarque : Vous ne pouvez demander un nouveau mot de passe que toutes les %tokenLifetime% heures.
 
-        If you don't get an email check your spam folder or try again.
+        Si vous ne recevez pas un email, vérifiez votre dossier spam ou essayez à nouveau.
+
     request:
-        username: 'Username or email address'
-        submit: 'Reset password'
+        username: 'Nom d''utilisateur ou adresse e-mail'
+        submit: 'Réinitialiser le mot de passe'
     reset:
-        submit: 'Change password'
-        password: Reset your password
+        submit: 'Modifier le mot de passe'
+        password: Réinitialisez votre mot de passe
     flash:
-        success: 'The password has been reset successfully.'
+        success: 'Le mot de passe a été réinitialisé avec succès.'
     email:
-        subject: 'Reset Password'
+        subject: 'Réinitialisation de votre mot de passe'
         message: |
-            Hello %username%!
+            Bonjour %username% !
 
-            To reset your password - please visit %confirmationUrl%
+            Pour réinitialiser votre mot de passe, merci de vous rendre sur %confirmationUrl%
 
-            Regards,
-            the Team.
+            Cordialement,
+            L'équipe
 
-# Global strings
 layout:
-    logout: 'Log out'
-    login: 'Log in'
-    register: Register
-    logged_in_as: 'Logged in as %username%'
-
+    logout: Déconnexion
+    login: Connexion
+    register: Inscription
+    logged_in_as: 'Connecté en tant que %username%'
 form:
-    group_name: 'Group name'
-    username: Username
-    email: Email
-    first_name: 'First Name'
-    last_name: 'Last Name'
-    telephone: 'Phone number'
-    fax: 'Fax number'
-    laguage: 'Language'
+    group_name: 'Nom du groupe'
+    username: 'Nom d''utilisateur'
+    first_name: 'Nom'
+    last_name: 'Prenom'
+    telephone: 'Numéro de téléphone'
+    fax: 'Numéro de fax'
+    laguage: 'Langue'
     roles: 'Roles'
-    current_password: 'Current password'
-    password: Password
-    password_confirmation: 'Repeat password'
-    new_password: 'New password'
-    new_password_confirmation: 'Repeat new password'
+    email: 'Adresse e-mail'
+    current_password: 'Mot de passe actuel'
+    password: 'Mot de passe'
+    password_confirmation: 'Répéter le mot de passe'
+    new_password: 'Nouveau mot de passe'
+    new_password_confirmation: 'Répéter le nouveau mot de passe'
 user:
-    managment: Users managment
-    list: Users list
+    managment: Gestion des utilisateurs
+    list: Liste des utilisateurs
+
+    email:
+        compta:
+            message: |
+                Bonjour %accountant_name% !<br><br>
+
+                Vous trouverez ci-joint, une nouvelle commande faite ce jour (%date_facture%). Vous pourrez imprimer la facture proforma en vous rendant à l'adresse suivante: <a href='%facturation_url%'>Facturation</a> <br><br>
+                Dans le champ rechercher, saisir le numéro de la facture suivant %numero_facture% afin de la retrouver plus facilement. <br><br>
+                Ensuite cliquez sur le bouton situé dans la colonne "Actions" pour télécharger et imprimer ladite facture.<br><br>
+
+                Cordialement,<br>
+                L'équipe CHIMAF

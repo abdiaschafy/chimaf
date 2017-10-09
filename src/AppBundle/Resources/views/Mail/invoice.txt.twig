@@ -1,0 +1,11 @@
+{% block subject %}
+    {% autoescape false %}
+    {#{{ 'registration.email.subject'|trans({'%login%': user.username, '%username%': user.fullName, '%password%': pwd, '%confirmationUrl%': confirmationUrl}, 'fos_user_bundle') }}#}
+    {% endautoescape %}
+{% endblock %}
+{% block body_text %}
+{% autoescape false %}
+    {{ 'user.email.compta.message'|trans({'%accountant_name%': accountant_name, '%facturation_url%': facturation_url, '%numero_facture%': numero_facture, '%date_facture%': date_facture}, 'fos_user_bundle') }}
+    {% endautoescape %}
+{% endblock %}
+{% block body_html %}{% endblock %}

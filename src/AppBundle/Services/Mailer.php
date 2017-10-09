@@ -16,15 +16,15 @@ class Mailer
         $this->template = $template;
         $this->mailer = $mailer;
     }
-    public function sendConfirmationMail(UserInterface $user, $confirmationUrl, $plainPwd)
+    public function sendMail(UserInterface $user, array $params, $template)
     {
-        $message = (new \Swift_Message('[Chimaf] : Confirmation de création de compte utilisateur'))
-            ->setFrom('no-reply@example.com')
+        $message = (new \Swift_Message($params['subject']))
+            ->setFrom('no-reply@chimaf.com')
             ->setTo($user->getEmail())
             ->setBody(
                 $this->template->render(
-                    '@User/Registration/email.txt.twig',
-                    array('user' => $user, 'confirmationUrl' => $confirmationUrl, 'pwd' => $plainPwd)
+                    $template,
+                    $params
                 ),
                 'text/html'
             );
