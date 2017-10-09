@@ -97,3 +97,15 @@ form:
 user:
     managment: Gestion des utilisateurs
     list: Liste des utilisateurs
+
+    email:
+        compta:
+            message: |
+                Bonjour %accountant_name% !<br><br>
+
+                Vous trouverez ci-joint, une nouvelle commande faite ce jour (%date_facture%). Vous pourrez imprimer la facture proforma en vous rendant à l'adresse suivante: <a href='%facturation_url%'>Facturation</a> <br><br>
+                Dans le champ rechercher, saisir le numéro de la facture suivant %numero_facture% afin de la retrouver plus facilement. <br><br>
+                Ensuite cliquez sur le bouton situé dans la colonne "Actions" pour télécharger et imprimer ladite facture.<br><br>
+
+                Cordialement,<br>
+                L'équipe CHIMAF

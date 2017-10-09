@@ -85,7 +85,16 @@ class RegistrationController extends BaseController
                     $url = $this->generateUrl('fos_user_registration_register');
                     $response = new RedirectResponse($url);
                     // confirmation email
-                    $this->mailerService->sendConfirmationMail($user, $confirmationUrl, $plainPwd);
+                    $params  = array(
+                        'subject' => '[Chimaf] : Confirmation de création de compte utilisateur',
+                        'user' => $user, 
+                        'confirmationUrl' => $confirmationUrl, 
+                        'pwd' => $plainPwd
+                    );
+                    $template = '@User/Registration/email.txt.twig';
+                    $this->mailerService->sendMail($user, $params, $template);
+
+                    $this->addFlash('success', 'L\'utilisateur '.$user->getFullName().' a été créé avec succès. Un mail de confirmation lui a été envoyé.');
                 }
 
 //                $dispatcher->dispatch(FOSUserEvents::REGISTRATION_COMPLETED, new FilterUserResponseEvent($user, $request, $response));

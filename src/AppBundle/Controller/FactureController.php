@@ -18,6 +18,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\BrowserKit\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Serializer\Serializer;
 
 /**
@@ -36,7 +37,7 @@ class FactureController extends Controller
      *
      * @return Response
      */
-    public function billAction(Request $request)
+    public function invoiceAction(Request $request)
     {
         $isAjax = $request->isXmlHttpRequest();
 
@@ -114,11 +115,12 @@ class FactureController extends Controller
                 // Mise à jour du stock du produit acheté
                 $prod->setQuantiteStock($prod->getQuantiteStock() - $produit->quantiteAchetee);
                 $em->persist($prod);
-                
                 $em->persist($produitFacture);
             }
             $em->flush();
             $this->addFlash('success', "Votre commande a été prise en compte, vous recevrez prochainement votre facture proformat à valider");
+            $this->sendMailToAccountant($facture);
+
             $request->getSession()->clear();
         } catch (\Exception $e) {
             $this->addFlash('error', $e->getMessage());
@@ -155,5 +157,22 @@ class FactureController extends Controller
         $dompdf->render();
         // On renvoie  le flux du fichier pdf dans une  Response pour l'utilisateur
         return new Response ($dompdf->stream());
+    }
+
+    private function sendMailToAccountant(Facture $facture)
+    {
+        $comptable = $this->getDoctrine()->getRepository('AppBundle:User')->getAccountant();
+        $facturation_url = $this->generateUrl('invoice_list', array(), UrlGeneratorInterface::ABSOLUTE_URL);
+
+        $params  = array(
+            'subject' => '[Chimaf] : Réception de commande',
+            'accountant_name' => $comptable->getFullName(),
+            'numero_facture' => $facture->getNumero(),
+            'date_facture' => $facture->getDateFacture()->format('d/m/Y'),
+            'facturation_url' => $facturation_url
+        );
+        $template = '@App/Mail/invoice.txt.twig';
+        $this->get('app.mailer')->sendMail($comptable, $params, $template);
+        
     }
 }

@@ -11,6 +11,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class Group extends BaseRole
 {
+    const ROLE_USER = 'ROLE_USER';
+    const ROLE_STORE_KEEPER = 'ROLE_STORE_KEEPER';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_ACCOUNTANT = 'ROLE_ACCOUNTANT';
+    
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")

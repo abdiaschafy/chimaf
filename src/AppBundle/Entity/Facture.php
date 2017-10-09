@@ -26,7 +26,7 @@ class Facture
     /**
      * @var string
      *
-     * @ORM\Column(name="numero", type="string", length=10)
+     * @ORM\Column(name="numero", type="string", length=30)
      */
     private $numero;
 
