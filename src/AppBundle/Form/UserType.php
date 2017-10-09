@@ -1,119 +1,104 @@
 <?php
 namespace AppBundle\Form;
 
-use Doctrine\ORM\EntityRepository;
-use Symfony\Component\Form\AbstractType;
+use AppBundle\Entity\Group;
+use AppBundle\Repository\GroupRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use UserBundle\Form\UserRegistrationType;
 
-class UserType extends AbstractType
+class UserType extends UserRegistrationType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('first_name', 'text', array(
-                'required'  =>  true,
-                'label'     =>  'infos_personnelles.form.field_label.prenom',
-                'label_attr'=>   array('class'   =>  'text-default'),
-                'attr'      =>  array(
-                    'class'         => 'form-control input-sm',
-                    'autofocus'     => 'autofocus',
-                )
-            ))
-            ->add('last_name', 'text', array(
-                'required'  =>  true,
-                'label'     =>  'infos_personnelles.form.field_label.nom',
-                'label_attr'=>   array('class'   =>  'text-default'),
-                'attr'      =>  array(
-                    'class'         => 'form-control input-sm',
-                )
-            ))
-            ->add('email', 'email', array(
-                'required'  =>  true,
-                'label'     =>  'infos_personnelles.form.field_label.mail',
-                'label_attr'=>   array('class'   =>  'text-default'),
-                'attr'      =>  array(
-                    'class'         => 'form-control input-sm',
-                )
-            ));
-//
-//            $builder
-//                ->add('groupe', 'entity', array(
-//                    'class'         =>  'AppBundle:Groupe',
-//                    'query_builder' => function (EntityRepository $er) {
-//                        return $er->createQueryBuilder('g')
-//                            ->where('g.code = :code')
-//                            ->setParameter('code', Groupe::CLIENT_CODE);
-//                    },
-//                    'property'      =>  'name',
-//                    'required'      =>  true,
-//                    'label'         =>  'infos_personnelles.form.field_label.role',
-//                    'label_attr'    =>   array('class'   =>  'text-default'),
-//                    'attr'          =>  array(
-//                        'class' => 'form-control input-sm cil-group',
-//                    )
-//                )) ;
-
-
-        $builder
-            ->add('language', 'cil_locale', array(
+            ->add('last_name', TextType::class, array(
+                'label' => 'form.last_name',
+                'label_attr' => array('class' => 'text-color-white required'),
                 'required' => false,
-                'label' =>  'infos_personnelles.form.field_label.langue_preferee',
-                'label_attr' => array('class' => 'text-default'),
-                'placeholder' => 'infos_personnelles.form.field_label.choix_langue',
-            ))
-            ->add('client', 'entity', array(
-                'class'         =>  'AppBundle:Client',
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('c')
-                        ->orderBy('c.raisonSociale', 'ASC');
-                },
-                'property'      =>  'raisonSociale',
-                'required'      =>  false,
-                'label'         =>  'infos_personnelles.form.field_label.client',
-                'label_attr'    =>   array('class'   =>  'text-default'),
-                'placeholder'   =>  'infos_personnelles.form.field_label.choix_client',
-                'attr'          =>  array(
-                    'class'         => 'form-control input-sm',
+                'attr' => array(
+                    'class' => 'form-control input-sm',
+                    'maxlength' => 50
                 )
             ))
-            ->add('phone', 'text', array(
-                'required'      =>  true,
-                'label'         =>  'infos_personnelles.form.field_label.telephone',
-                'label_attr'    =>   array('class'   =>  'text-default'),
+            ->add('first_name', TextType::class, array(
+                'label' => 'form.first_name',
+                'label_attr' => array('class' => 'text-color-white required'),
+                'required' => false,
                 'attr' => array(
-                    'class'         => 'form-control input-sm ',
+                    'class' => 'form-control input-sm',
+                    'maxlength' => 50
                 )
             ))
-            ->add('fax', 'text', array(
-                'required'      =>  false,
-                'label'         =>  'infos_personnelles.form.field_label.fax',
-                'label_attr'    =>   array('class'   =>  'text-default'),
+            ->add('email', EmailType::class, array(
+                'label' => 'form.email',
+                'label_attr' => array('class' => 'text-color-white required'),
+                'required' => false,
                 'attr' => array(
-                    'class'         => 'form-control input-sm',
+                    'class' => 'form-control input-sm',
                 )
             ))
-            ->add('enabled', 'checkbox', array(
-                'label'     =>  'infos_personnelles.form.field_label.actif',
-                'label_attr'    =>   array('class'   =>  'text-default'),
+            ->add('phone', TextType::class, array(
+                'label' => 'form.telephone',
+                'required' => false,
+                'label_attr' => array('class' => 'text-color-white required'),
                 'attr' => array(
-                    'class'         => 'margin-left-10',
+                    'class' => 'form-control input-sm height-30',
+                    'maxlength' => 15
+                )
+            ))
+            ->add('fax', TextType::class, array(
+                'label' => 'form.fax',
+                'required' => false,
+                'label_attr' => array('class' => 'text-color-white'),
+                'attr' => array(
+                    'class' => 'form-control input-sm height-30',
+                    'maxlength' => 30
+                )
+            ))
+            ->add('language', ChoiceType::class, array(
+                'required' => true,
+                'label' => 'form.language',
+                'label_attr' => array('class' => 'text-color-white'),
+                'choices' => array(
+                    'Français' => 'fr',
+                    'English' => 'en'
                 ),
-                'required'  => false
+                'attr' => array('class' => 'form-control')
             ))
-        ;
+            ->add('groups', EntityType::class, array(
+                'required' => true,
+                'multiple' => true,
+                'query_builder' => function(GroupRepository $gr) {
+                    return $gr->createQueryBuilder('g')
+                        ->where('g.code = :code')
+                        ->setParameter('code', Group::ROLE_CLIENT);
+                },
+                'class' => 'AppBundle\Entity\Group',
+                'choice_label' => 'name',
+                'label' => 'form.roles',
+                'label_attr' => array('class' => 'text-color-white'),
+                'attr' => array('class' => 'form-control')
+            ))
+            ;
+        $builder->remove('plainPassword');
+        $builder->remove('username');
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Cil\AppBundle\Entity\User',
-            'translation_domain' => 'infos_personnelles_form'
+            'data_class' => 'AppBundle\Entity\User',
+            'translation_domain' => 'fos_user_bundle'
         ));
     }
 
     public function getName()
     {
-        return 'appbundle_usertype';
+        return 'user_form_type';
     }
 }

@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\GroupRepository")
  * @ORM\Table(name="role")
  */
 class Group extends BaseRole
@@ -15,6 +15,7 @@ class Group extends BaseRole
     const ROLE_STORE_KEEPER = 'ROLE_STORE_KEEPER';
     const ROLE_ADMIN = 'ROLE_ADMIN';
     const ROLE_ACCOUNTANT = 'ROLE_ACCOUNTANT';
+    const ROLE_CLIENT = 'ROLE_CLIENT';
     
     /**
      * @ORM\Id

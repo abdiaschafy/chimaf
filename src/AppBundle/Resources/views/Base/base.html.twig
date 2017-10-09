@@ -25,7 +25,7 @@
             {% endblock %}
             <div class="container-fluid">
 
-                {% for label, messages in app.flashes(['success', 'error']) %}
+                {% for label, messages in app.flashes(['success', 'error', 'info']) %}
                     {% for message in messages %}
                         <div class="alert alert-{{ label }} alert-dismissable">
                             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>

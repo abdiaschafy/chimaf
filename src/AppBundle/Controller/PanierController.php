@@ -23,8 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
 class PanierController extends Controller
 {
     /**
-     * Lists all Post entities.
-     *
      * @param Request $request
      *
      * @Route("/list", name="cart_list")

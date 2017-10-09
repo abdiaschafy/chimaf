@@ -701,7 +701,7 @@ class User implements UserInterface, GroupableInterface
      */
     public function __toString()
     {
-        return (string) $this->getUsername();
+        return (string) $this->getFullName();
     }
 
     /**

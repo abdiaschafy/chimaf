@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 use AppBundle\Datatables\FactureDatatable;
 use AppBundle\Datatables\ProduitDatatable;
 use AppBundle\Datatables\ProduitFactureDatatable;
+use AppBundle\Entity\Client;
 use AppBundle\Entity\Facture;
 use AppBundle\Entity\Produit;
 use AppBundle\Entity\ProduitFacture;
@@ -88,24 +89,24 @@ class FactureController extends Controller
     }
     
     /**
-     * @param Request $request
-     *
-     * @Route("/create", name="facture_create")
+     * @Route("/create/{client}", name="facture_create")
      * @Method({"GET", "POST"})
-     *
+     * @param Request $request
+     * @param Client $client
      * @return Response
      */
-    public function createBillAction(Request $request)
+    public function createBillAction(Request $request, Client $client)
     {
-        $produits = $request->get('cart_form_produit')['produits'];
-        $tva = $request->get('cart_form_produit')['tva'];
-        $totalTTC = $request->get('cart_form_produit')['totalTTC'];
-        $totalHT = $request->get('cart_form_produit')['totalHT'];
+        $session = $request->getSession();
+        $produits = $session->get('produits');
+        $tva = $session->get('tva');
+        $totalTTC = $session->get('totalTTC');
+        $totalHT = $session->get('totalHT');
         $objetProduits = (object)json_decode(json_encode($produits));
 
         try {
             $em = $this->getDoctrine()->getManager();
-            $facture = new Facture($totalTTC, $totalHT, $tva);
+            $facture = new Facture($client, $totalTTC, $totalHT, $tva);
             $em->persist($facture);
             $em->flush();
 
