@@ -2,6 +2,7 @@
 
 namespace AppBundle\Datatables;
 
+use AppBundle\Entity\Facture;
 use Sg\DatatablesBundle\Datatable\AbstractDatatable;
 use Sg\DatatablesBundle\Datatable\Style;
 use Sg\DatatablesBundle\Datatable\Column\Column;
@@ -57,6 +58,9 @@ class FactureDatatable extends BaseDatatable
             ->add('totalTtc', Column::class, array(
                 'title' => 'TotalTtc',
                 ))
+            ->add('client.user.last_name', Column::class, array(
+                'title' => 'Client',
+                ))
             ->add(null, ActionColumn::class, array(
                 'title' => $this->translator->trans('sg.datatables.actions.title'),
                 'actions' => array(
@@ -85,7 +89,7 @@ class FactureDatatable extends BaseDatatable
      */
     public function getEntity()
     {
-        return 'AppBundle\Entity\Facture';
+        return Facture::class;
     }
 
     /**

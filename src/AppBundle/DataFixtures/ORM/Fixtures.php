@@ -19,11 +19,13 @@ class Fixtures extends Fixture
         $grpAdmin = new Group('Administrateur', ['ROLE_ADMIN', 'ROLE_STORE_KEEPER', 'ROLE_USER'], 'ROLE_ADMIN');
         $grpComptable = new Group('Comptable', ['ROLE_ACCOUNTANT'], 'ROLE_ACCOUNTANT');
         $grpMagasinier = new Group('Gestionnaire de stock', ['ROLE_STORE_KEEPER'], 'ROLE_STORE_KEEPER');
+        $grpClient = new Group('Utilisateur client', ['ROLE_CLIENT'], 'ROLE_CLIENT');
 
         $manager->persist($grpUser);
         $manager->persist($grpAdmin);
         $manager->persist($grpComptable);
         $manager->persist($grpMagasinier);
+        $manager->persist($grpClient);
         $manager->flush();
 
         /**

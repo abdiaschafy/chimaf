@@ -1,0 +1,142 @@
+{% extends '@App/Base/base.html.twig' %}
+
+{% block page_content %}
+
+    <div class="row">
+        <h1 class="text-left title-text margin-left-10">
+            Saisissez vos coordonnées de livraison
+        </h1>
+        <hr>
+    </div>
+
+
+    <div class="top-content">
+        <div class="inner-bg">
+            <div class="container">
+
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3 form-box">
+                        <div class="form-top">
+                            <div class="form-top-left">
+                                <h3>Vos coordonnées ici</h3>
+                                <p>Veuillez entrer les informations de livraison</p>
+                            </div>
+                            <div class="form-top-right">
+                                <i class="fa fa-sign-in" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="form-bottom">
+
+                            {{ form_start(form) }}
+
+                                <div class="row">
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.user.first_name) }}
+                                                </label>
+                                                {{ form_widget(form.user.first_name) }}
+                                                {{ form_errors(form.user.first_name) }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.user.last_name) }}
+                                                </label>
+                                                {{ form_widget(form.user.last_name) }}
+                                                {{ form_errors(form.user.last_name) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.user.email) }}
+                                                </label>
+                                                {{ form_widget(form.user.email) }}
+                                                {{ form_errors(form.user.email) }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.codePostal) }}
+                                                </label>
+                                                {{ form_widget(form.codePostal) }}
+                                                {{ form_errors(form.codePostal) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.rue) }}
+                                                </label>
+                                                {{ form_widget(form.rue) }}
+                                                {{ form_errors(form.rue) }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.ville) }}
+                                                </label>
+                                                {{ form_widget(form.ville) }}
+                                                {{ form_errors(form.ville) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.user.phone) }}
+                                                </label>
+                                                {{ form_widget(form.user.phone) }}
+                                                {{ form_errors(form.user.phone) }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.user.fax) }}
+                                                </label>
+                                                {{ form_widget(form.user.fax) }}
+                                                {{ form_errors(form.user.fax) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.pays) }}
+                                                </label>
+                                                {{ form_widget(form.pays) }}
+                                                {{ form_errors(form.pays) }}
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="control-label requiredField text-left">
+                                                    {{ form_label(form.user.language) }}
+                                                </label>
+                                                {{ form_widget(form.user.language) }}
+                                                {{ form_errors(form.user.language) }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group pull-right">
+                                        <button type="submit" class="btn btn-success">Confirmez votre commande</button>
+                                    </div>
+                                </div>
+
+                            {{ form_end(form) }}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

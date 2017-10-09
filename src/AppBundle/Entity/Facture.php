@@ -61,14 +61,21 @@ class Facture
      */
     private $tva;
 
-    public function __construct($totalTtc, $totalHt, $tva)
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Client")
+     * @ORM\JoinColumn(name="client_id", referencedColumnName="id")
+     */
+    private $client;
+
+    public function __construct(Client $client, $totalTtc, $totalHt, $tva)
     {
-        $this->totalTtc = $totalTtc;
-        $this->totalHt = $totalHt;
-        $this->tva = $tva;
+        $this->setClient($client);
+        $this->setTotalTtc($totalTtc);
+        $this->setTotalHt($totalHt);
+        $this->setTva($tva);
         $this->produitsDeLaFacture = new ArrayCollection();
-        $this->dateFacture = new \DateTime();
-        $this->numero = 'CH'.strtoupper(substr(md5(uniqid(self::CHIMAF, true)),0,15));
+        $this->setDateFacture(new \DateTime());
+        $this->setNumero('CH'.strtoupper(substr(md5(uniqid(self::CHIMAF, true)),0,15)));
     }
     /**
      * Get id
@@ -190,6 +197,24 @@ class Facture
     public function setTva($tva)
     {
         $this->tva = $tva;
+    }
+
+    /**
+     * @return Client
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * @param Client $client
+     * @return $this
+     */
+    public function setClient(Client $client)
+    {
+        $this->client = $client;
+        return $this;
     }
 }
 
