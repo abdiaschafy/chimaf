@@ -1,6 +1,6 @@
 services:
-    app.form.type.user:
-        class: AppBundle\Form\UserType
+    app.form.type.user_client:
+        class: AppBundle\Form\UserClientType
         tags:
             - { name: form.type }
 

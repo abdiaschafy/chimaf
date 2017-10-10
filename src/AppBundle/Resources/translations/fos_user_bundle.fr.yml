@@ -86,7 +86,7 @@ form:
     last_name: 'Prenom'
     telephone: 'Numéro de téléphone'
     fax: 'Numéro de fax'
-    laguage: 'Langue'
+    language: 'Langue'
     roles: 'Roles'
     email: 'Adresse e-mail'
     current_password: 'Mot de passe actuel'

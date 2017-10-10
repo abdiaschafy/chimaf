@@ -11,7 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use UserBundle\Form\UserRegistrationType;
 
-class UserType extends UserRegistrationType
+class UserClientType extends UserRegistrationType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -70,21 +70,8 @@ class UserType extends UserRegistrationType
                 ),
                 'attr' => array('class' => 'form-control')
             ))
-            ->add('groups', EntityType::class, array(
-                'required' => true,
-                'multiple' => true,
-                'query_builder' => function(GroupRepository $gr) {
-                    return $gr->createQueryBuilder('g')
-                        ->where('g.code = :code')
-                        ->setParameter('code', Group::ROLE_CLIENT);
-                },
-                'class' => 'AppBundle\Entity\Group',
-                'choice_label' => 'name',
-                'label' => 'form.roles',
-                'label_attr' => array('class' => 'text-color-white'),
-                'attr' => array('class' => 'form-control')
-            ))
             ;
+        $builder->remove('groups');
         $builder->remove('plainPassword');
         $builder->remove('username');
     }
