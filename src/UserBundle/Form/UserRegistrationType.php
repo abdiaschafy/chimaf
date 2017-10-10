@@ -2,6 +2,8 @@
 namespace UserBundle\Form;
 
 
+use AppBundle\Entity\Group;
+use AppBundle\Repository\GroupRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -79,6 +81,11 @@ class UserRegistrationType extends AbstractType
                 'required' => true,
                 'multiple' => true,
                 'class' => 'AppBundle\Entity\Group',
+                'query_builder' => function(GroupRepository $gr) {
+                    return $gr->createQueryBuilder('g')
+                        ->where('g.code != :code')
+                        ->setParameter('code', Group::ROLE_CLIENT);
+                },
                 'choice_label' => 'name',
                 'label' => 'form.roles',
                 'label_attr' => array('class' => 'text-color-white'),

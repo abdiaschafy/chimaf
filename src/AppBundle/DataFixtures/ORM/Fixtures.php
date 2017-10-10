@@ -31,7 +31,6 @@ class Fixtures extends Fixture
         /**
          * UTILISATEURS PRINCIPAUX DE L'APPLICATION
          */
-
         $admin = new User();
         $admin->setPassword($this->generatePassWord($admin));
         $admin->setEmail('admin@yopmail.com');

@@ -2,6 +2,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Client;
+use AppBundle\Entity\Group;
 use AppBundle\Entity\Produit;
 use AppBundle\Form\ClientType;
 use AppBundle\Form\ProduitType;
@@ -68,6 +69,9 @@ class ClientController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $client
+                ->getUser()
+                ->addGroup($em->getRepository('AppBundle:Group')->findOneBy(array('code' => Group::ROLE_CLIENT)));
             $em->persist($client->setNumero('C'.StringGenerator::generate(8)));
             $em->flush();
             
