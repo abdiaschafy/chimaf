@@ -62,7 +62,7 @@ class UserDatatable extends BaseDatatable
                             'id' => 'id'
                         ),
                         'label' => $this->translator->trans('sg.datatables.actions.show'),
-                        'icon' => 'glyphicon glyphicon-eye-open',
+                        'icon' => 'fa fa-eye',
                         'attributes' => array(
                             'rel' => 'tooltip',
                             'title' => $this->translator->trans('sg.datatables.actions.show'),
@@ -76,7 +76,7 @@ class UserDatatable extends BaseDatatable
                             'id' => 'id'
                         ),
                         'label' => $this->translator->trans('sg.datatables.actions.edit'),
-                        'icon' => 'glyphicon glyphicon-edit',
+                        'icon' => 'fa fa-edit',
                         'attributes' => array(
                             'rel' => 'tooltip',
                             'title' => $this->translator->trans('sg.datatables.actions.edit'),

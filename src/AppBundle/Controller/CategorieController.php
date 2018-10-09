@@ -22,11 +22,11 @@ class CategorieController extends Controller
     /**
      * Lists all category products.
      * @Security("has_role('ROLE_STORE_KEEPER') or has_role('ROLE_ADMIN')")
-     * @param Request $request
      * @Route("/list", name="categorie_produit_list")
      * @Method("GET")
-     *
+     * @param Request $request
      * @return Response
+     * @throws \Exception
      */
     public function indexAction(Request $request)
     {

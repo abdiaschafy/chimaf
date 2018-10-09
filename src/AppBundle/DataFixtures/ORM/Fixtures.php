@@ -84,7 +84,7 @@ class Fixtures extends Fixture
         $manager->persist($tole);
         $corniere = new CategorieProduit('CORNIERE', 'fa-sun-o');
         $manager->persist($corniere);
-        $autre = new CategorieProduit('AUTRE', 'fa-sun-o');
+        $autre = new CategorieProduit('AUTRES', 'fa-sun-o');
         $manager->persist($autre);
         $pointes = new CategorieProduit('POINTES', 'fa-sun-o');
         $manager->persist($pointes);

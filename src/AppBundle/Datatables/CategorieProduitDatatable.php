@@ -57,7 +57,7 @@ class CategorieProduitDatatable extends BaseDatatable
                             'id' => 'id'
                         ),
                         'label' => 'Modifier',
-                        'icon' => 'glyphicon glyphicon-edit',
+                        'icon' => 'fa fa-edit',
                         'attributes' => array(
                             'rel' => 'tooltip',
                             'class' => 'btn btn-info btn-xs',

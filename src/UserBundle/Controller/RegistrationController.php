@@ -118,16 +118,18 @@ class RegistrationController extends BaseController
 
     /**
      * Tell the user to check their email provider.
+     * @param Request $request
+     * @return RedirectResponse|Response
      */
-    public function checkEmailAction()
+    public function checkEmailAction(Request $request)
     {
-        $email = $this->get('session')->get('fos_user_send_confirmation_email/email');
+        $email = $request->getSession()->get('fos_user_send_confirmation_email/email');
 
         if (empty($email)) {
             return new RedirectResponse($this->get('router')->generate('fos_user_registration_register'));
         }
 
-        $this->get('session')->remove('fos_user_send_confirmation_email/email');
+        $request->getSession()->remove('fos_user_send_confirmation_email/email');
         $user = $this->get('fos_user.user_manager')->findUserByEmail($email);
 
         if (null === $user) {

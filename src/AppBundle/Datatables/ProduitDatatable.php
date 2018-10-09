@@ -52,7 +52,7 @@ class ProduitDatatable extends BaseDatatable
                         'route_parameters' => array(
                             'id' => 'id'
                         ),
-                        'icon' => 'glyphicon glyphicon-eye-open',
+                        'icon' => 'fa fa-eye',
                         'attributes' => array(
                             'rel' => 'tooltip',
                             'title' => $this->translator->trans('sg.datatables.actions.show'),
@@ -65,7 +65,7 @@ class ProduitDatatable extends BaseDatatable
                         'route_parameters' => array(
                             'id' => 'id'
                         ),
-                        'icon' => 'glyphicon glyphicon-edit',
+                        'icon' => 'fa fa-edit',
                         'attributes' => array(
                             'rel' => 'tooltip',
                             'title' => $this->translator->trans('sg.datatables.actions.edit'),
