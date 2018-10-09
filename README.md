@@ -11,11 +11,11 @@ Comment installer le projet
 > A l'aide d'une invite de commande, se déplacer dans le répertoire de votre projet
 Exécutez les commandes:
 - composer install
-- ./bin/console assets:install --symlink
-- ./bin/console assetic:dump
-- Si la base de données existe: ./bin/console doctrine:database:drop --force
-- Create database: ./bin/console doctrine:database:create
-- update database:  ./bin/console doctrine:schema:update --force
-- peupler la base de donnée: ./bin/console doctrine:fixtures:load -n
+- _./bin/console assets:install --symlink_
+- _./bin/console assetic:dump_
+- Si la base de données existe: _./bin/console doctrine:database:drop --force_
+- Create database: _./bin/console doctrine:database:create_
+- update database:  _./bin/console doctrine:schema:update --force_
+- peupler la base de donnée: _./bin/console doctrine:fixtures:load -n_
 
-accéder à l'application: localhost/web/app_dev.php
+accéder à l'application: _localhost/web/app_dev.php_
