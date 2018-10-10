@@ -69,7 +69,7 @@ class UserRegistrationType extends AbstractType
             ))
             ->add('language', ChoiceType::class, array(
                 'required' => true,
-                'label' => 'form.laguage',
+                'label' => 'Langue',
                 'label_attr' => array('class' => 'text-color-white'),
                 'choices' => array(
                     'Français' => 'fr',
